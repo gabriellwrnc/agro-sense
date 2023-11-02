@@ -1,17 +1,16 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AuthScreenStacks } from './src/navigations';
+
 
 const App: React.FC = () => {
   return (
-    <NavigationContainer>
-      <View>
-        <Text>Initial Agrosense</Text>
-      </View>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <AuthScreenStacks />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

@@ -1,39 +1,27 @@
 import React from 'react';
-import { Text } from 'react-native-ui-lib';
-import { ScreenLayout } from '../../../components';
-import { FontFamily, FontSize } from '../../../configs';
+import { Image } from 'react-native';
+import { View } from 'react-native-ui-lib';
+import { CustomText, ScreenLayout } from '../../../components';
+import { SignInProps } from '../../../types';
+import FormSignIn from './components/FormSignIn';
 
-const SignIn: React.FC = () => {
+const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     return (
-        <ScreenLayout backgroundColor="light" flex center>
-            <Text
-                style={{
-                    fontFamily: FontFamily.reemkufiBold,
-                    fontSize: FontSize.xl,
-                }}>
-                Reemkufi Bold
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FontFamily.reemkufiRegular,
-                    fontSize: FontSize.xl,
-                }}>
-                Reemkufi Regular
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FontFamily.poppinsBold,
-                    fontSize: FontSize.xl,
-                }}>
-                Poppins Bold
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FontFamily.poppinsRegular,
-                    fontSize: FontSize.xl,
-                }}>
-                Poppins Regular
-            </Text>
+        <ScreenLayout backgroundColor="light" padding={30} flex center>
+            <View flex center style={{ gap: 100 }}>
+                <View row centerV style={{ gap: 10 }}>
+                    <Image
+                        source={require('../../../../assets/images/Logo.png')}
+                    />
+                    <CustomText
+                        color="primaryColor"
+                        fontFamily="reemkufiBold"
+                        fontSize="xxl"
+                        text="Agrosense"
+                    />
+                </View>
+                <FormSignIn navigation={navigation} />
+            </View>
         </ScreenLayout>
     );
 };

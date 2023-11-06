@@ -12,6 +12,7 @@ const ScreenLayout: React.FC<ScreenLayoutProps> = ({
     spread,
     start,
     testId,
+    padding,
 }) => {
     return (
         <View
@@ -32,7 +33,7 @@ const ScreenLayout: React.FC<ScreenLayoutProps> = ({
                 contentContainerStyle={{
                     flexGrow: 1,
                     flex: flex ? 1 : undefined,
-                    padding: 20,
+                    padding: padding ? padding : 20,
                     alignItems: center ? 'center' : undefined,
                     justifyContent: spread
                         ? 'space-between'

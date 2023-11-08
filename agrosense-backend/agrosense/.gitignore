@@ -4,3 +4,26 @@ node_modules/
 npm-debug.log
 yarn-error.log
 package-lock.json
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+.env.staging
+.env.development
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Firebase Credentials
+(dev)-agrosense-dev-firebase-adminsdk-nv01k-5041194851.json
+(dev)google-services.json
+(prod)-agrosense-2b320-firebase-adminsdk-ittbq-32a43867c3.json

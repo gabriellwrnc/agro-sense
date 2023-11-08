@@ -73,3 +73,7 @@ export type CustomButtonProps = {
 export type FormSignInProps = {
     navigation: NativeStackNavigationProp<AuthParamList, "SignIn", undefined>
 }
+
+export type FormSignUpProps = {
+    navigation: NativeStackNavigationProp<AuthParamList, "SignUp", undefined>
+}

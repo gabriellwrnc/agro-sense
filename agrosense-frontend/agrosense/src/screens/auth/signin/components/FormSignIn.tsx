@@ -87,7 +87,7 @@ const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
                                 error={touched.password && errors.password}
                             />
                         </View>
-                        <View style={{ gap: 35 }}>
+                        <View style={{ gap: 40 }}>
                             <Pressable style={{ alignSelf: 'flex-end' }}>
                                 <CustomText
                                     color="greyColor"

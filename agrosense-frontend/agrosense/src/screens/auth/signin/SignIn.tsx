@@ -8,8 +8,8 @@ import FormSignIn from './components/FormSignIn';
 const SignIn: React.FC<SignInProps> = ({ navigation }) => {
     return (
         <ScreenLayout backgroundColor="light" padding={30} flex center>
-            <View flex center style={{ gap: 100 }}>
-                <View row centerV style={{ gap: 10 }}>
+            <View flex center style={{ gap: 125 }}>
+                <View row centerV style={{ gap: 15 }}>
                     <Image
                         source={require('../../../../assets/images/Logo.png')}
                     />

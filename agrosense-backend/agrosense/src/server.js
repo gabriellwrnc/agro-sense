@@ -17,9 +17,6 @@ const port = process.env.PORT;
 const db = process.env.DATABASE_URL;
 const logDirectory = path.join(__dirname, 'logs');
 
-console.log('port', port)
-console.log('process.env.FIREBASE_PROJECT_API_KEY', process.env.FIREBASE_PROJECT_API_KEY)
-
 if (!fs.existsSync(logDirectory)) {
     fs.mkdirSync(logDirectory);
 }

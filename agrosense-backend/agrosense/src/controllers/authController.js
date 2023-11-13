@@ -30,7 +30,7 @@ export const signUp = async (req, res) => {
             name,
             email,
             phoneNumber,
-            role: 'user',
+            role: 'farmer',
             firebaseId: firebaseResponse.user.uid,
         });
 

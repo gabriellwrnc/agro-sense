@@ -11,9 +11,12 @@ import {
     PhoneIcon,
     ShowPasswordIcon,
 } from '../../../../configs';
+import { useSignUp } from '../../../../hooks';
 import { FormSignUpProps, SignUpRequest } from '../../../../types';
+import { handleAxiosErr } from '../../../../utils';
 
 const FormSignUp: React.FC<FormSignUpProps> = ({ navigation }) => {
+    const mutationSignUp = useSignUp();
     const [isPasswordVisible, setPasswordVisible] =
         React.useState<boolean>(false);
     const [isPasswordConfirmVisible, setPasswordConfirmVisible] =
@@ -51,18 +54,26 @@ const FormSignUp: React.FC<FormSignUpProps> = ({ navigation }) => {
                 ),
         });
 
+    const handleSignUp = (
+        values: SignUpRequest,
+        actions: FormikHelpers<SignUpRequest>,
+    ) => {
+        mutationSignUp.mutate(values, {
+            onSuccess: () => {
+                actions.setSubmitting(false);
+                console.log('values', values);
+            },
+            onError: err => {
+                handleAxiosErr(err);
+                actions.setSubmitting(false);
+            },
+        });
+    };
+
     return (
         <Formik
             initialValues={signUpInitialValues}
-            onSubmit={(
-                values: SignUpRequest,
-                actions: FormikHelpers<SignUpRequest>,
-            ) => {
-                console.log('values', values);
-                setTimeout(() => {
-                    actions.setSubmitting(false);
-                }, 1000);
-            }}
+            onSubmit={handleSignUp}
             validationSchema={signUpValidationScheme}>
             {({
                 handleBlur,

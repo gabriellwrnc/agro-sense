@@ -65,3 +65,6 @@ package-lock.json
 
 # testing
 /coverage
+
+# Environment variable
+.env

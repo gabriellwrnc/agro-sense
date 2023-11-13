@@ -8,3 +8,13 @@ export type SignUpRequest = SignInRequest & {
     phoneNumber: string;
     confirmPassword: string;
 };
+
+export type DefaultResponse = {
+    status: string;
+};
+
+export type GetNewTokenResponse = {
+    status: string;
+    accessToken: string;
+    refreshToken?: string;
+};

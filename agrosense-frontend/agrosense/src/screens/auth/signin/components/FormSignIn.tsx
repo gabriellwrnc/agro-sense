@@ -2,6 +2,7 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { View } from 'react-native-ui-lib';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import {
     CustomButton,
@@ -12,11 +13,27 @@ import {
     EmailIcon,
     HidePasswordIcon,
     PasswordIcon,
+    ROLE,
     ShowPasswordIcon,
+    TOKEN,
+    removeDataToLocalStorage,
+    setDataToLocalStorage,
 } from '../../../../configs';
-import { FormSignInProps, SignInRequest } from '../../../../types';
+import { useSignIn } from '../../../../hooks';
+import { modalSlice } from '../../../../slices';
+import {
+    FormSignInProps,
+    SignInRequest,
+    SignInResponse,
+} from '../../../../types';
+import { handleAxiosErr } from '../../../../utils';
+import { AxiosResponse } from 'axios';
 
 const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const { hideModal, showModal } = modalSlice.actions;
+    const mutationSignIn = useSignIn();
+
     const [isPasswordVisible, setPasswordVisible] =
         React.useState<boolean>(false);
 
@@ -34,19 +51,66 @@ const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
                 .required('Email tidak boleh kosong'),
             password: yup.string().required('Password tidak boleh kosong'),
         });
+
+    const setLocalStorageData = (resp: AxiosResponse<SignInResponse, any>) => {
+        removeDataToLocalStorage(TOKEN);
+        removeDataToLocalStorage(ROLE);
+
+        setDataToLocalStorage(ROLE, { role: resp.data.data.role });
+        setDataToLocalStorage(TOKEN, {
+            accessToken: resp.data.accessToken,
+            refreshToken: resp.data.refreshToken,
+        });
+    };
+
+    const handleSignIn = (
+        values: SignInRequest,
+        actions: FormikHelpers<SignInRequest>,
+    ) => {
+        let errorText = 'Permintaan gagal';
+
+        mutationSignIn.mutate(values, {
+            onSuccess: resp => {
+                setLocalStorageData(resp);
+                dispatch(
+                    showModal({ status: 'success', text: 'Login berhasil' }),
+                );
+                if (resp.data.data.role === 'farmer') {
+                    navigation.navigate('FarmerScreenStacks');
+                } else if (resp.data.data.role === 'admin') {
+                    console.log('Anda admin');
+                    // navigation.navigate('AdminScreenStacks');
+                }
+                setTimeout(() => {
+                    dispatch(hideModal());
+                    actions.setSubmitting(false);
+                }, 3000);
+            },
+            onError: err => {
+                handleAxiosErr(err);
+                if (err.response?.status === 402) {
+                    errorText = 'Email atau password anda salah';
+                    actions.setErrors({
+                        email: 'Email atau password anda salah',
+                        password: 'Email atau password anda salah',
+                    });
+                } else if (err.response?.status === 401) {
+                    errorText = 'Akun tidak ditemukan';
+                }
+                if (err.response?.status === 500) errorText = 'Server error';
+                dispatch(showModal({ status: 'failed', text: errorText }));
+                setTimeout(() => {
+                    dispatch(hideModal());
+                }, 4000);
+                actions.setSubmitting(false);
+            },
+        });
+    };
+
     return (
         <Formik
             initialValues={signInInitialValues}
-            onSubmit={(
-                values: SignInRequest,
-                actions: FormikHelpers<SignInRequest>,
-            ) => {
-                console.log('values', values);
-                setTimeout(() => {
-                    actions.setSubmitting(false);
-                    navigation.navigate('FarmerScreenStacks');
-                }, 1000);
-            }}
+            onSubmit={handleSignIn}
             validationSchema={signInValidationScheme}>
             {({
                 handleBlur,

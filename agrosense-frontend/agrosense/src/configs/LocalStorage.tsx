@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const TOKEN = '@token';
+export const ROLE = '@role';
 
 export const setDataToLocalStorage = async (key: string, data: Object) => {
     try {

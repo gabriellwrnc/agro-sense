@@ -75,10 +75,11 @@ const FormSignUp: React.FC<FormSignUpProps> = ({ navigation }) => {
                 navigation.navigate('SignIn');
                 setTimeout(() => {
                     dispatch(hideModal());
+                    actions.setSubmitting(false);
                 }, 4000);
-                actions.setSubmitting(false);
             },
             onError: err => {
+                handleAxiosErr(err);
                 if (err.response?.status === 409) {
                     errorText = 'Email sudah terdaftar';
                     actions.setErrors({ email: 'Email sudah terdaftar' });

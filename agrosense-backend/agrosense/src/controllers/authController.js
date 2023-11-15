@@ -93,7 +93,13 @@ export const signIn = async (req, res) => {
 
         if (error.code === 'auth/wrong-password') {
             return res
-                .status(400)
+                .status(402)
+                .json({ status: 'fail', message: 'Invalid credentials' });
+        }
+
+        if (error.code === 'auth/invalid-login-credentials') {
+            return res
+                .status(402)
                 .json({ status: 'fail', message: 'Invalid credentials' });
         }
 

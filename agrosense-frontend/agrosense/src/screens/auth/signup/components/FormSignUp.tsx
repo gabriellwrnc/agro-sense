@@ -1,6 +1,7 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { View } from 'react-native-ui-lib';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import { CustomButton, CustomTextInput } from '../../../../components';
 import {
@@ -12,10 +13,13 @@ import {
     ShowPasswordIcon,
 } from '../../../../configs';
 import { useSignUp } from '../../../../hooks';
+import { modalSlice } from '../../../../slices';
 import { FormSignUpProps, SignUpRequest } from '../../../../types';
 import { handleAxiosErr } from '../../../../utils';
 
 const FormSignUp: React.FC<FormSignUpProps> = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const { hideModal, showModal } = modalSlice.actions;
     const mutationSignUp = useSignUp();
     const [isPasswordVisible, setPasswordVisible] =
         React.useState<boolean>(false);
@@ -58,13 +62,37 @@ const FormSignUp: React.FC<FormSignUpProps> = ({ navigation }) => {
         values: SignUpRequest,
         actions: FormikHelpers<SignUpRequest>,
     ) => {
+        let errorText = 'Permintaan gagal';
+
         mutationSignUp.mutate(values, {
             onSuccess: () => {
+                dispatch(
+                    showModal({
+                        status: 'success',
+                        text: 'Pendaftaran berhasil, silahkan masuk.',
+                    }),
+                );
+                navigation.navigate('SignIn');
+                setTimeout(() => {
+                    dispatch(hideModal());
+                }, 4000);
                 actions.setSubmitting(false);
-                console.log('values', values);
             },
             onError: err => {
-                handleAxiosErr(err);
+                if (err.response?.status === 409) {
+                    errorText = 'Email sudah terdaftar';
+                    actions.setErrors({ email: 'Email sudah terdaftar' });
+                }
+                if (err.response?.status === 400) {
+                    errorText = 'Email tidak valid';
+                    actions.setErrors({ email: 'Email tidak valid' });
+                }
+                if (err.response?.status === 500) errorText = 'Server error';
+
+                dispatch(showModal({ status: 'failed', text: errorText }));
+                setTimeout(() => {
+                    dispatch(hideModal());
+                }, 4000);
                 actions.setSubmitting(false);
             },
         });

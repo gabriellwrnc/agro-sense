@@ -1,7 +1,7 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FormikErrors } from "formik";
 import { NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
-import { AuthParamList } from "./Navigators";
+import { AuthParamList, RootParamList } from "./Navigators";
 
 export type ScreenLayoutProps = {
     children: React.ReactNode;
@@ -71,7 +71,7 @@ export type CustomButtonProps = {
 }
 
 export type FormSignInProps = {
-    navigation: NativeStackNavigationProp<AuthParamList, "SignIn", undefined>
+    navigation: NativeStackNavigationProp<AuthParamList & RootParamList, "SignIn", undefined>
 }
 
 export type FormSignUpProps = {

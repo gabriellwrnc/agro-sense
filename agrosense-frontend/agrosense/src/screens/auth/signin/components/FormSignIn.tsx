@@ -44,6 +44,7 @@ const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
                 console.log('values', values);
                 setTimeout(() => {
                     actions.setSubmitting(false);
+                    navigation.navigate('FarmerScreenStacks');
                 }, 1000);
             }}
             validationSchema={signInValidationScheme}>

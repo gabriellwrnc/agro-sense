@@ -1,0 +1,1 @@
+export { default as FarmerHome } from './home/Home';

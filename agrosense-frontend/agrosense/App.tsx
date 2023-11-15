@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { AuthScreenStacks } from './src/navigations';
 import { CustomToast } from './src/components';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { RootStacks } from './src/navigations';
 
 const App: React.FC = () => {
     const queryClient = new QueryClient();
@@ -14,7 +14,7 @@ const App: React.FC = () => {
             <QueryClientProvider client={queryClient}>
                 <SafeAreaProvider>
                     <NavigationContainer>
-                        <AuthScreenStacks />
+                        <RootStacks />
                     </NavigationContainer>
                     <CustomToast />
                 </SafeAreaProvider>

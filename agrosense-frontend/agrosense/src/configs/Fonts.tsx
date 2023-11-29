@@ -8,10 +8,12 @@ export const FontFamily = {
     poppinsBoldItalic: 'Poppins-BoldItalic',
     poppinsSemiBold: 'Poppins-SemiBold',
     poppinsMedium: 'Poppins-Medium',
+    poppinsMediumItalic: 'Poppins-MediumItalic',
     poppinsRegular: 'Poppins-Regular',
 };
 
 export const FontSize = {
+    xxxs: 10,
     xs: 14,
     sm: 16,
     md: 18,

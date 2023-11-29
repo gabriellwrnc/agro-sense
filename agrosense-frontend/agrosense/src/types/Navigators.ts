@@ -10,6 +10,12 @@ export type RootParamList = {
     AuthScreenStack: undefined;
 };
 
-export type FarmerParamList = {
-    FarmerHomeScreen: undefined
+export type FarmerStackParamList = {
+    FarmerHomeTab: undefined
+}
+
+export type FarmerHomeTabParamList = {
+    FarmerHome: undefined;
+    FarmerHistory: undefined;
+    FarmerNotif: undefined;
 }

@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { FarmerHome } from '../screens';
-import { FarmerParamList } from '../types';
+import { FarmerStackParamList } from '../types';
+import FarmerHomeTabNav from './FarmerHomeTabNav';
 
-const FarmerStack = createNativeStackNavigator<FarmerParamList>();
+const FarmerStack = createNativeStackNavigator<FarmerStackParamList>();
 
 const FarmerScreenStacks = () => {
     return (
         <FarmerStack.Navigator screenOptions={{ headerShown: false }}>
             <FarmerStack.Screen
-                name="FarmerHomeScreen"
-                component={FarmerHome}
+                name="FarmerHomeTab"
+                component={FarmerHomeTabNav}
             />
         </FarmerStack.Navigator>
     );

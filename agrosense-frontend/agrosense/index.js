@@ -7,10 +7,13 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { name as appName } from './app.json';
 import store from './src/store';
+import { PaperProvider } from 'react-native-paper';
 
 const ReduxApp = () => (
     <Provider store={store}>
-        <App />
+        <PaperProvider>
+            <App />
+        </PaperProvider>
     </Provider>
 );
 

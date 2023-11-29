@@ -1,7 +1,7 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FormikErrors } from "formik";
-import { NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
-import { AuthParamList, RootParamList } from "./Navigators";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { FormikErrors } from 'formik';
+import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
+import { AuthParamList, RootParamList } from './Navigators';
 
 export type ScreenLayoutProps = {
     children: React.ReactNode;
@@ -12,7 +12,7 @@ export type ScreenLayoutProps = {
     start?: boolean;
     flex?: boolean;
     padding?: number;
-}
+};
 
 export type CustomTextProps = {
     text: string;
@@ -26,9 +26,19 @@ export type CustomTextProps = {
     | 'poppinsBoldItalic'
     | 'poppinsSemiBold'
     | 'poppinsMedium'
-    | 'poppinsRegular';
-    fontSize: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xl1' | 'xl2' | 'xxl' | 'xxxl';
-    color: 'primaryColor' | 'secColor' | 'bgColor' | 'errorColor' | 'greyColor';
+    | 'poppinsRegular'
+    | 'poppinsMediumItalic';
+    fontSize: 'xxxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xl1' | 'xl2' | 'xxl' | 'xxxl';
+    color:
+    | 'primaryColor'
+    | 'secColor'
+    | 'bgColor'
+    | 'errorColor'
+    | 'greyColor'
+    | 'ligthTextColor'
+    | 'secLigthTextColor'
+    | 'primaryLightColor';
+    ellipsizeMode?: boolean
 };
 
 export type CustomTextInputProps = {
@@ -60,20 +70,29 @@ export type CustomTextInputProps = {
     | 'email-address'
     | 'phone-pad';
     fullBorder?: boolean;
-}
+};
 
 export type CustomButtonProps = {
     text: string;
-    color?: 'primaryColor' | 'secColor' | 'bgColor' | 'errorColor' | 'greyColor';
+    color?:
+    | 'primaryColor'
+    | 'secColor'
+    | 'bgColor'
+    | 'errorColor'
+    | 'greyColor';
     type: 'primary' | 'secondary';
     onPress: () => void;
     isSubmitting?: boolean;
-}
+};
 
 export type FormSignInProps = {
-    navigation: NativeStackNavigationProp<AuthParamList & RootParamList, "SignIn", undefined>
-}
+    navigation: NativeStackNavigationProp<
+        AuthParamList & RootParamList,
+        'SignIn',
+        undefined
+    >;
+};
 
 export type FormSignUpProps = {
-    navigation: NativeStackNavigationProp<AuthParamList, "SignUp", undefined>
-}
+    navigation: NativeStackNavigationProp<AuthParamList, 'SignUp', undefined>;
+};

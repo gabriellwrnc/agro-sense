@@ -3,5 +3,10 @@ module.exports = {
   plugins: [
     "@babel/plugin-transform-export-namespace-from",
     'react-native-reanimated/plugin'
-  ]
+  ],
+  env: {
+    production: {
+      plugins: ['react-native-paper/babel'],
+    },
+  },
 };

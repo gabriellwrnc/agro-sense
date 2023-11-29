@@ -8,9 +8,12 @@ const CustomText: React.FC<CustomTextProps> = ({
     fontFamily,
     fontSize,
     text,
+    ellipsizeMode = false,
 }) => {
     return (
         <Text
+            numberOfLines={ellipsizeMode ? 1 : 0}
+            ellipsizeMode={ellipsizeMode ? 'tail' : 'head'}
             style={{
                 fontFamily: `${FontFamily[fontFamily]}`,
                 fontSize: FontSize[fontSize],

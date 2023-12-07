@@ -1,2 +1,3 @@
 export { default as firebaseAuth } from './firebaseAuth';
-export * from './tokenManagement'
+export { default as firebaseAdmin } from './firebaseAdmin';
+export * from './tokenManagement';

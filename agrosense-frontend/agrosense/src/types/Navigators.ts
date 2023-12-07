@@ -1,7 +1,7 @@
 export type AuthParamList = {
     SignIn: undefined;
     SignUp: undefined;
-}
+};
 
 export type RootParamList = {
     Splash: undefined;
@@ -11,11 +11,13 @@ export type RootParamList = {
 };
 
 export type FarmerStackParamList = {
-    FarmerHomeTab: undefined
-}
+    FarmerHomeTab: undefined;
+    FarmerConsult: undefined;
+    FarmerConsultResult: undefined;
+};
 
 export type FarmerHomeTabParamList = {
     FarmerHome: undefined;
     FarmerHistory: undefined;
     FarmerNotif: undefined;
-}
+};

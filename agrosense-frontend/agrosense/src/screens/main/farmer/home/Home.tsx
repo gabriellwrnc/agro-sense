@@ -10,8 +10,9 @@ import {
     getDataFromLocalStorage,
 } from '../../../../configs';
 import { CarouselHome, TopBarHome } from './components';
+import { FarmerHomeProps } from '../../../../types';
 
-const Home = () => {
+const Home: React.FC<FarmerHomeProps> = ({ navigation }) => {
     const dummyShip: {
         _id: string;
         imageUrl: string;
@@ -101,7 +102,7 @@ const Home = () => {
                 )}
             />
             <Pressable
-                onPress={() => console.log('pressed')}
+                onPress={() => navigation.navigate('FarmerConsult')}
                 style={{
                     position: 'absolute',
                     display: 'flex',

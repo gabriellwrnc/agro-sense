@@ -12,6 +12,7 @@ export const Colors = {
     bgSuccessColor: '#d6eedb',
     bgInfoColor: '#d6deee',
     ligthTextColor: '#FDFEFD',
+    darkTextColor: '#575757',
     secLigthTextColor: '#DFE6E0',
     primaryLightColor: '#C8E8C8',
     tabBarColor: '#819B83',

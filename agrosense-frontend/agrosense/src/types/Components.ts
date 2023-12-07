@@ -1,7 +1,13 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FormikErrors } from 'formik';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
-import { AuthParamList, RootParamList } from './Navigators';
+import {
+    AuthParamList,
+    FarmerHomeTabParamList,
+    RootParamList,
+} from './Navigators';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { CompositeNavigationProp } from '@react-navigation/native';
 
 export type ScreenLayoutProps = {
     children: React.ReactNode;
@@ -17,28 +23,38 @@ export type ScreenLayoutProps = {
 export type CustomTextProps = {
     text: string;
     fontFamily:
-    | 'reemkufiBold'
-    | 'reemkufiSemiBold'
-    | 'reemkufiMedium'
-    | 'reemkufiRegular'
-    | 'poppinsExtraBold'
-    | 'poppinsBold'
-    | 'poppinsBoldItalic'
-    | 'poppinsSemiBold'
-    | 'poppinsMedium'
-    | 'poppinsRegular'
-    | 'poppinsMediumItalic';
-    fontSize: 'xxxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xl1' | 'xl2' | 'xxl' | 'xxxl';
+        | 'reemkufiBold'
+        | 'reemkufiSemiBold'
+        | 'reemkufiMedium'
+        | 'reemkufiRegular'
+        | 'poppinsExtraBold'
+        | 'poppinsBold'
+        | 'poppinsBoldItalic'
+        | 'poppinsSemiBold'
+        | 'poppinsMedium'
+        | 'poppinsRegular'
+        | 'poppinsMediumItalic';
+    fontSize:
+        | 'xxxs'
+        | 'xs'
+        | 'sm'
+        | 'md'
+        | 'lg'
+        | 'xl'
+        | 'xl1'
+        | 'xl2'
+        | 'xxl'
+        | 'xxxl';
     color:
-    | 'primaryColor'
-    | 'secColor'
-    | 'bgColor'
-    | 'errorColor'
-    | 'greyColor'
-    | 'ligthTextColor'
-    | 'secLigthTextColor'
-    | 'primaryLightColor';
-    ellipsizeMode?: boolean
+        | 'primaryColor'
+        | 'secColor'
+        | 'bgColor'
+        | 'errorColor'
+        | 'greyColor'
+        | 'ligthTextColor'
+        | 'secLigthTextColor'
+        | 'primaryLightColor';
+    ellipsizeMode?: boolean;
 };
 
 export type CustomTextInputProps = {
@@ -52,34 +68,29 @@ export type CustomTextInputProps = {
     editable?: boolean;
     secureTextEntry?: boolean;
     error?:
-    | string
-    | false
-    | string[]
-    | FormikErrors<any>
-    | FormikErrors<any>[]
-    | boolean
-    | Date;
+        | string
+        | false
+        | string[]
+        | FormikErrors<any>
+        | FormikErrors<any>[]
+        | boolean
+        | Date;
     value?: string;
     multiline?: boolean;
     rightIconTestId?: string;
     keyboardType?:
-    | 'default'
-    | 'number-pad'
-    | 'decimal-pad'
-    | 'numeric'
-    | 'email-address'
-    | 'phone-pad';
+        | 'default'
+        | 'number-pad'
+        | 'decimal-pad'
+        | 'numeric'
+        | 'email-address'
+        | 'phone-pad';
     fullBorder?: boolean;
 };
 
 export type CustomButtonProps = {
     text: string;
-    color?:
-    | 'primaryColor'
-    | 'secColor'
-    | 'bgColor'
-    | 'errorColor'
-    | 'greyColor';
+    disable?: boolean;
     type: 'primary' | 'secondary';
     onPress: () => void;
     isSubmitting?: boolean;

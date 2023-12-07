@@ -6,7 +6,7 @@ import { Colors } from '../configs';
 import { View } from 'react-native-ui-lib';
 
 const CustomButton: React.FC<CustomButtonProps> = ({
-    color,
+    disable = false,
     onPress,
     text,
     type,
@@ -15,8 +15,13 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     return (
         <Pressable
             style={{
-                backgroundColor:
-                    type === 'primary' ? Colors.primaryColor : Colors.bgColor,
+                backgroundColor: disable
+                    ? type === 'primary'
+                        ? Colors.primaryBgColor
+                        : Colors.bgColor
+                    : type === 'primary'
+                    ? Colors.primaryColor
+                    : Colors.bgColor,
                 padding: 6,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -24,6 +29,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
                 borderWidth: type === 'secondary' ? 2 : 0,
                 borderColor: Colors.primaryColor,
             }}
+            disabled={disable}
             onPress={onPress}>
             {isSubmitting ? (
                 <View style={{ paddingVertical: 6 }}>

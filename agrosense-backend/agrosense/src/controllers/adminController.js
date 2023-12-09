@@ -1,4 +1,4 @@
-import { Pest, Solution, Symptom } from '../models';
+import { Case, Pest, Solution, Symptom } from '../models';
 import { firebaseAdmin } from '../utils';
 
 export const addSymptom = async (req, res) => {
@@ -164,6 +164,41 @@ export const addPestImage = async (req, res) => {
         });
     } catch (error) {
         console.log('error', error);
+        return res.status(500).json({ status: 'fail', message: error });
+    }
+};
+
+export const addVerifiedCase = async (req, res) => {
+    const { pestCode } = req.body;
+
+    try {
+        const pestFound = await Pest.findOne({ pestCode });
+        if (!pestFound) {
+            return res
+                .status(404)
+                .json({ status: 'fail', message: 'Pest not found' });
+        }
+
+        const caseCount = await Case.countDocuments();
+        const caseCode = `C-${caseCount >= 9 ? '' : '0'}${caseCount + 1}`;
+
+        const newCase = new Case({
+            caseCode,
+            pestCode,
+            status: 'verified',
+        });
+
+        newCase.save();
+
+        return res.status(200).json({
+            status: 'success',
+            message: {
+                data: {
+                    newCase,
+                },
+            },
+        });
+    } catch (error) {
         return res.status(500).json({ status: 'fail', message: error });
     }
 };

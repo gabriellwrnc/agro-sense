@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import path from 'path';
 import * as rfs from 'rotating-file-stream';
-import { adminRouter, authRouter, pestRouter } from './routes';
+import { adminRouter, authRouter, pestRouter, symptomRouter } from './routes';
 
 const app = express();
 const environment = process.env.NODE_ENV || 'LOCAL';
@@ -41,6 +41,7 @@ mongoose
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/pest', pestRouter);
+app.use('/api/symptom', symptomRouter);
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

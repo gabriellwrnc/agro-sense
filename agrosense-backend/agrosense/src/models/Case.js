@@ -11,6 +11,17 @@ const caseSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        symptoms: [
+            {
+                symptomCode: {
+                    type: String,
+                    ref: 'Symptom',
+                },
+                weight: {
+                    type: Number,
+                },
+            },
+        ],
         status: {
             type: String,
             enum: ['pending', 'verified', 'unverified'],

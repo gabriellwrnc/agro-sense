@@ -18,6 +18,10 @@ const pestSchema = new mongoose.Schema(
         imageUrl: {
             type: String,
         },
+        caseCount: {
+            type: Number,
+            default: 0,
+        },
     },
     { timestamps: true },
 );

@@ -169,9 +169,10 @@ export const addPestImage = async (req, res) => {
 };
 
 export const addVerifiedCase = async (req, res) => {
-    const { pestCode } = req.body;
+    const { pestCode, symptomCodes } = req.body;
 
     try {
+        let symptoms = [];
         const pestFound = await Pest.findOne({ pestCode });
         if (!pestFound) {
             return res
@@ -180,15 +181,34 @@ export const addVerifiedCase = async (req, res) => {
         }
 
         const caseCount = await Case.countDocuments();
-        const caseCode = `C-${caseCount >= 9 ? '' : '0'}${caseCount + 1}`;
+        const caseCode = `K-${caseCount >= 9 ? '' : '0'}${caseCount + 1}`;
+
+        for (const symptomCode of symptomCodes) {
+            const symptomFound = await Symptom.findOne({ symptomCode });
+            if (!symptomFound) {
+                return res
+                    .status(404)
+                    .json({ status: 'fail', message: 'Symptom not found' });
+            }
+
+            symptoms.push({
+                symptomCode,
+                weight: symptomFound.weight.find(
+                    weight => weight.pestCode === pestCode,
+                ).weightValue,
+            });
+        }
 
         const newCase = new Case({
             caseCode,
             pestCode,
+            symptoms,
             status: 'verified',
         });
 
         newCase.save();
+
+        await pestFound.updateOne({ $inc: { caseCount: 1 } });
 
         return res.status(200).json({
             status: 'success',
@@ -199,6 +219,7 @@ export const addVerifiedCase = async (req, res) => {
             },
         });
     } catch (error) {
+        console.log('error', error);
         return res.status(500).json({ status: 'fail', message: error });
     }
 };

@@ -26,9 +26,7 @@ export const getAllPests = async (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: {
-                data: pestsData,
-            },
+            data: pestsData,
         });
     } catch (error) {
         console.log('error', error);

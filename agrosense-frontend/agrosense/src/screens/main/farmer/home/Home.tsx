@@ -10,40 +10,14 @@ import {
     getDataFromLocalStorage,
 } from '../../../../configs';
 import { CarouselHome, TopBarHome } from './components';
-import { FarmerHomeProps } from '../../../../types';
+import { FarmerHomeProps, Pest } from '../../../../types';
+import { useGetAllPest } from '../../../../hooks';
+import { handleAxiosErr } from '../../../../utils';
 
 const Home: React.FC<FarmerHomeProps> = ({ navigation }) => {
-    const dummyShip: {
-        _id: string;
-        imageUrl: string;
-        name: string;
-        italicName: string;
-    }[] = [
-        {
-            _id: '1',
-            imageUrl: 'https://picsum.photos/375/500?random=1',
-            name: 'Kepinding Tanah',
-            italicName: 'Scotinophara Coarctata',
-        },
-        {
-            _id: '2',
-            imageUrl: 'https://picsum.photos/375/500?random=2',
-            name: 'Kepinding Air',
-            italicName: 'Scotinophara Coarctata',
-        },
-        {
-            _id: '3',
-            imageUrl: 'https://picsum.photos/375/500?random=3',
-            name: 'Kepinding Api',
-            italicName: 'Scotinophara Coarctata',
-        },
-        {
-            _id: '4',
-            imageUrl: 'https://picsum.photos/375/500?random=4',
-            name: 'Kepinding Udara',
-            italicName: 'Scotinophara Coarctata',
-        },
-    ];
+    const mutationGetAllPest = useGetAllPest();
+    const [pests, setPests] = React.useState<Pest[]>([]);
+    const carouselHomeImageUrls = pests.map(pest => pest.imageUrl).slice(2, 7);
 
     React.useEffect(() => {
         getDataFromLocalStorage(TOKEN).then(res => {
@@ -52,7 +26,15 @@ const Home: React.FC<FarmerHomeProps> = ({ navigation }) => {
         getDataFromLocalStorage(ROLE).then(res => {
             return console.log(res);
         });
-    });
+        mutationGetAllPest.mutate(undefined, {
+            onSuccess: resp => {
+                setPests(resp.data.data);
+            },
+            onError: err => {
+                handleAxiosErr(err);
+            },
+        });
+    }, []);
     return (
         <>
             <FlatList
@@ -63,7 +45,7 @@ const Home: React.FC<FarmerHomeProps> = ({ navigation }) => {
                     <>
                         <TopBarHome />
                         <ScreenLayout backgroundColor="light" padding={10}>
-                            <CarouselHome />
+                            <CarouselHome imageUrls={carouselHomeImageUrls} />
                             <View>
                                 <CustomText
                                     color="primaryColor"
@@ -72,21 +54,29 @@ const Home: React.FC<FarmerHomeProps> = ({ navigation }) => {
                                     text="Daftar Hama"
                                 />
                                 <FlatList
-                                    data={dummyShip}
-                                    keyExtractor={item => item._id}
-                                    renderItem={({ item }) => (
-                                        <HamaCard
-                                            imageUrl={item.imageUrl}
-                                            name={item.name}
-                                            italicName={item.italicName}
-                                            onPress={() =>
-                                                console.log(
-                                                    'pressed',
-                                                    item.name,
-                                                )
-                                            }
-                                        />
-                                    )}
+                                    data={pests}
+                                    keyExtractor={item => item.pestCode}
+                                    renderItem={({ item }) => {
+                                        const italicNameMatch =
+                                            /\((.*?)\)/.exec(item.name);
+                                        const italicName = italicNameMatch
+                                            ? italicNameMatch[1]
+                                            : '';
+
+                                        return (
+                                            <HamaCard
+                                                imageUrl={item.imageUrl}
+                                                name={item.name}
+                                                italicName={italicName}
+                                                onPress={() =>
+                                                    console.log(
+                                                        'pressed',
+                                                        item.name,
+                                                    )
+                                                }
+                                            />
+                                        );
+                                    }}
                                     numColumns={2}
                                     contentContainerStyle={{
                                         gap: 10,

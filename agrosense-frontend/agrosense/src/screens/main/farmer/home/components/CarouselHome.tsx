@@ -1,13 +1,8 @@
 import { Carousel, Image, View } from 'react-native-ui-lib';
 import { Colors } from '../../../../../configs';
+import { CarouselHomeProps } from '../../../../../types';
 
-const CarouselHome: React.FC = () => {
-    const carouselImages = [
-        'https://picsum.photos/375/500?random=1',
-        'https://picsum.photos/375/500?random=2',
-        'https://picsum.photos/375/500?random=3',
-    ];
-
+const CarouselHome: React.FC<CarouselHomeProps> = ({ imageUrls }) => {
     return (
         <Carousel
             loop
@@ -18,7 +13,7 @@ const CarouselHome: React.FC = () => {
             //     console.log(currentPage);
             // }}
         >
-            {carouselImages.map((image, index) => {
+            {imageUrls.map((image, index) => {
                 return (
                     <View
                         key={index}

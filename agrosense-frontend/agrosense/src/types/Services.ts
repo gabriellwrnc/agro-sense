@@ -14,22 +14,36 @@ export type SignUpRequest = SignInRequest & {
 };
 
 export type SignInResponse = {
-    status: string
+    status: string;
     data: {
-        _id: string
-        name: string
-        phoneNumber: string
-        firebaseId: string
-        email: string
-        role: string
-        __v: number
-    }
-    accessToken: string
-    refreshToken: string
-}
+        _id: string;
+        name: string;
+        phoneNumber: string;
+        firebaseId: string;
+        email: string;
+        role: string;
+        __v: number;
+    };
+    accessToken: string;
+    refreshToken: string;
+};
 
 export type GetNewTokenResponse = {
     status: string;
     accessToken: string;
     refreshToken?: string;
+};
+
+export type Pest = {
+    name: string;
+    pestCode: string;
+    description: string;
+    imageUrl: string;
+    symptoms: string[];
+    solutions: string[];
+};
+
+export type GetAllPestsResponse = {
+    status: string;
+    data: Pest[];
 };

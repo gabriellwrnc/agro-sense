@@ -26,6 +26,7 @@ const HamaCard: React.FC<HamaCardProps> = ({
                     padding: 10,
                     borderRadius: 10,
                     width: 180,
+                    height: 280,
                 }}>
                 <Image
                     source={{
@@ -61,7 +62,14 @@ const HamaCard: React.FC<HamaCardProps> = ({
                             text={italicName}
                         />
                     </View>
-                    <View row centerV style={{ gap: 6 }}>
+                    <View
+                        flex
+                        row
+                        centerV
+                        style={{
+                            gap: 6,
+                            alignItems: 'flex-end',
+                        }}>
                         <Image
                             source={require('../../assets/images/Small-logo.png')}
                         />

@@ -107,3 +107,7 @@ export type FormSignInProps = {
 export type FormSignUpProps = {
     navigation: NativeStackNavigationProp<AuthParamList, 'SignUp', undefined>;
 };
+
+export type CarouselHomeProps = {
+    imageUrls: string[];
+};

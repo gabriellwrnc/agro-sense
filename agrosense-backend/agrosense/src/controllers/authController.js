@@ -1,4 +1,7 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from 'firebase/auth';
 import jwt from 'jsonwebtoken';
 import { RefreshToken, User } from '../models';
 import {
@@ -50,6 +53,13 @@ export const signUp = async (req, res) => {
                 .json({ status: 'fail', message: 'Invalid email' });
         }
 
+        if (error.code === 'auth/invalid-credential') {
+            return res.status(400).json({
+                status: 'fail',
+                message: 'Invalid credentials',
+            });
+        }
+
         res.status(500).json({ status: 'fail', message: error });
     }
 };
@@ -75,16 +85,16 @@ export const signIn = async (req, res) => {
         }
 
         const accessToken = createAccessToken(user.firebaseId);
-        const refreshToken = await createAndSaveRefreshToken(
-            user.firebaseId,
-        );
+        const refreshToken = await createAndSaveRefreshToken(user.firebaseId);
 
         res.status(200).json({
-            status: 'success', data: user, accessToken,
+            status: 'success',
+            data: user,
+            accessToken,
             refreshToken,
         });
     } catch (error) {
-        console.log('error', error)
+        console.log('error', error);
         if (error.code === 'auth/user-not-found') {
             return res
                 .status(404)

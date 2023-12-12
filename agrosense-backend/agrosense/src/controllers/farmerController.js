@@ -1,16 +1,21 @@
-import { Case, Pest, Symptom } from '../models';
+import { Case, Consultation, Pest, Solution, Symptom, User } from '../models';
 
 export const consultate = async (req, res) => {
-    const { symptomCodes } = req.body;
+    const { symptomCodes, userId } = req.body;
 
     try {
-        const cases = await Case.find({});
-        console.log('case count:', cases.length);
+        const user = await User.findOne({ _id: userId });
+        const cases = await Case.find({ status: 'verified' });
+
+        if (!user) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'User not found',
+            });
+        }
+
         const similarityValues = [];
-
         for (const caseItem of cases) {
-            console.log('right now on case', caseItem.caseCode);
-
             let numerator = 0;
             let denominator = 0;
             for (const caseSymptom of caseItem.symptoms) {
@@ -25,8 +30,6 @@ export const consultate = async (req, res) => {
                 numerator += symptomValue * weight;
                 denominator += weight;
             }
-            console.log(caseItem.caseCode, 'numerator:', numerator);
-            console.log(caseItem.caseCode, 'denominator:', denominator);
 
             const similarity = numerator / denominator;
             const similarityPercentage = (similarity * 100).toFixed(2);
@@ -35,20 +38,93 @@ export const consultate = async (req, res) => {
                 caseCode: caseItem.caseCode,
                 similarityPercentage: parseFloat(similarityPercentage),
             });
-
-            console.log(
-                'Similarity for case',
-                caseItem.caseCode,
-                ':',
-                similarity,
-            );
         }
 
-        console.log('similarityValues', similarityValues);
+        const sortedSimilarityValues = similarityValues.sort(
+            (a, b) => b.similarityPercentage - a.similarityPercentage,
+        );
+        const slicedSimilarityValues = sortedSimilarityValues.slice(0, 4);
+
+        let otherPestResponse = [];
+        const otherPests = slicedSimilarityValues.slice(1, 4);
+
+        const mainPest = await Pest.findOne({
+            pestCode: cases.find(
+                item => item.caseCode === slicedSimilarityValues[0].caseCode,
+            ).pestCode,
+        });
+        const mainPestSolution = await Solution.find({
+            pestCode: cases.find(
+                item => item.caseCode === slicedSimilarityValues[0].caseCode,
+            ).pestCode,
+        });
+
+        for (const otherPest of otherPests) {
+            const otherPestData = await Pest.findOne({
+                pestCode: cases.find(
+                    item => item.caseCode === otherPest.caseCode,
+                ).pestCode,
+            });
+            const otherPestSolution = await Solution.find({
+                pestCode: cases.find(
+                    item => item.caseCode === otherPest.caseCode,
+                ).pestCode,
+            });
+
+            otherPestResponse.push({
+                name: otherPestData.name,
+                solution: otherPestSolution.map(item => item.name),
+                similarityPercentage: otherPest.similarityPercentage,
+            });
+        }
+
+        if (slicedSimilarityValues[0].similarityPercentage < 60) {
+            const newCase = new Case({
+                caseCode: `K-${cases.length + 1}`,
+                pestCode: slicedSimilarityValues[0].caseCode,
+                symptoms: symptomCodes.map(symptomCode => ({
+                    symptomCode,
+                })),
+                status: 'unverified',
+            });
+
+            newCase.save();
+        }
+
+        const newConsultation = new Consultation({
+            userId,
+            symptomCodes,
+            consultationResult: {
+                status:
+                    slicedSimilarityValues[0].similarityPercentage < 60
+                        ? 'newCase'
+                        : 'oldCase',
+                mainPest: {
+                    name: mainPest.name,
+                    solution: mainPestSolution.map(item => item.name),
+                    similarityPercentage:
+                        slicedSimilarityValues[0].similarityPercentage,
+                },
+                otherPests: otherPestResponse,
+            },
+        });
+
+        newConsultation.save();
 
         return res.status(200).json({
             status: 'success',
-            message: 'Consultation success',
+            message: {
+                consultationResult: {
+                    status: newConsultation.consultationResult.status,
+                    mainPest: {
+                        name: mainPest.name,
+                        solution: mainPestSolution.map(item => item.name),
+                        similarityPercentage:
+                            slicedSimilarityValues[0].similarityPercentage,
+                    },
+                    otherPests: otherPestResponse,
+                },
+            },
         });
     } catch (error) {
         console.log('error', error);

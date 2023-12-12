@@ -6,6 +6,8 @@ import {
     addSolution,
     addSymptom,
     addVerifiedCase,
+    getAllCases,
+    getAllUsers,
 } from '../controllers';
 
 const adminRouter = Router();
@@ -16,5 +18,7 @@ adminRouter.post('/addSolution', addSolution);
 adminRouter.post('/addPest', addPest);
 adminRouter.post('/addPestImage', upload.single('image'), addPestImage);
 adminRouter.post('/addVerifiedCase', addVerifiedCase);
+adminRouter.get('/getAllUsers', getAllUsers);
+adminRouter.get('/getAllCases', getAllCases);
 
 export default adminRouter;

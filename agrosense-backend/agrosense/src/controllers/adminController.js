@@ -1,4 +1,4 @@
-import { Case, Pest, Solution, Symptom } from '../models';
+import { Case, Consultation, Pest, Solution, Symptom, User } from '../models';
 import { firebaseAdmin } from '../utils';
 
 export const addSymptom = async (req, res) => {
@@ -222,4 +222,62 @@ export const addVerifiedCase = async (req, res) => {
         console.log('error', error);
         return res.status(500).json({ status: 'fail', message: error });
     }
+};
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({ role: 'farmer' });
+
+        if (!users) {
+            return res
+                .status(404)
+                .json({ status: 'fail', message: 'User not found' });
+        }
+
+        const userResponse = await Promise.all(
+            users.map(async user => {
+                const userConsultations = await Consultation.find({
+                    userId: user._id,
+                });
+
+                return {
+                    name: user.name,
+                    email: user.email,
+                    phoneNumber: user.phoneNumber,
+                    consultationCount: userConsultations.length,
+                };
+            }),
+        );
+
+        return res.status(200).json({
+            status: 'success',
+            message: {
+                data: {
+                    users: userResponse,
+                },
+            },
+        });
+    } catch (error) {
+        console.log('error', error);
+        return res.status(500).json({ status: 'fail', message: error });
+    }
+};
+
+export const getAllCases = async (req, res) => {
+    try {
+        const cases = await Case.find();
+        const unverifiedCase = cases.filter(
+            caseData => caseData.status === 'unverified',
+        );
+
+        return res.status(200).json({
+            status: 'success',
+            message: {
+                data: {
+                    unverifiedCaseCount: unverifiedCase.length,
+                    cases,
+                },
+            },
+        });
+    } catch (error) {}
 };

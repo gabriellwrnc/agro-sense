@@ -64,3 +64,23 @@ export type GetAllSymptomsResponse = {
     status: string;
     data: Symptom[];
 };
+
+export type ConsultationRequest = {
+    userId: string;
+    symptomCodes: string[];
+};
+
+export type ConsultationPestData = {
+    name: string;
+    similarityPercentage: number;
+    solution: string[];
+};
+
+export type ConsultationResponse = {
+    status: string;
+    consultationResult: {
+        consultationStatus: string;
+        mainPest: ConsultationPestData;
+        otherPests: ConsultationPestData[];
+    };
+};

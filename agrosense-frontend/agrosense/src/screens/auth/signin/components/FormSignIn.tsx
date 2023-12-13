@@ -20,7 +20,7 @@ import {
     setDataToLocalStorage,
 } from '../../../../configs';
 import { useSignIn } from '../../../../hooks';
-import { modalSlice } from '../../../../slices';
+import { farmerDataSlice, modalSlice } from '../../../../slices';
 import {
     FormSignInProps,
     SignInRequest,
@@ -32,6 +32,7 @@ import { AxiosResponse } from 'axios';
 const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
     const dispatch = useDispatch();
     const { hideModal, showModal } = modalSlice.actions;
+    const { setFarmerData } = farmerDataSlice.actions;
     const mutationSignIn = useSignIn();
 
     const [isPasswordVisible, setPasswordVisible] =
@@ -75,6 +76,7 @@ const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
                 dispatch(
                     showModal({ status: 'success', text: 'Login berhasil' }),
                 );
+                dispatch(setFarmerData(resp.data.data));
                 if (resp.data.data.role === 'farmer') {
                     navigation.navigate('FarmerScreenStacks');
                 } else if (resp.data.data.role === 'admin') {
@@ -121,68 +123,64 @@ const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
                 errors,
                 isSubmitting,
             }: FormikProps<SignInRequest>) => (
-                <>
-                    <View style={{ gap: 4 }}>
-                        <View style={{ gap: 20 }}>
-                            <CustomTextInput
-                                icon={<EmailIcon />}
-                                placeholder="Masukkan nomor/email anda"
-                                onBlur={handleBlur('email')}
-                                onChange={handleChange('email')}
-                                value={values.email}
-                                error={touched.email && errors.email}
+                <View style={{ gap: 4 }}>
+                    <View style={{ gap: 20 }}>
+                        <CustomTextInput
+                            icon={<EmailIcon />}
+                            placeholder="Masukkan nomor/email anda"
+                            onBlur={handleBlur('email')}
+                            onChange={handleChange('email')}
+                            value={values.email}
+                            error={touched.email && errors.email}
+                        />
+                        <CustomTextInput
+                            icon={<PasswordIcon />}
+                            placeholder="Masukkan password anda"
+                            secureTextEntry={!isPasswordVisible}
+                            rightIcon={
+                                isPasswordVisible ? (
+                                    <HidePasswordIcon />
+                                ) : (
+                                    <ShowPasswordIcon />
+                                )
+                            }
+                            onIconTouch={() =>
+                                setPasswordVisible(!isPasswordVisible)
+                            }
+                            onBlur={handleBlur('password')}
+                            onChange={handleChange('password')}
+                            value={values.password}
+                            error={touched.password && errors.password}
+                        />
+                    </View>
+                    <View style={{ gap: 40 }}>
+                        <Pressable style={{ alignSelf: 'flex-end' }}>
+                            <CustomText
+                                color="greyColor"
+                                fontFamily="poppinsRegular"
+                                fontSize="sm"
+                                text="Lupa password?"
                             />
-                            <CustomTextInput
-                                icon={<PasswordIcon />}
-                                placeholder="Masukkan password anda"
-                                secureTextEntry={!isPasswordVisible}
-                                rightIcon={
-                                    isPasswordVisible ? (
-                                        <HidePasswordIcon />
-                                    ) : (
-                                        <ShowPasswordIcon />
-                                    )
-                                }
-                                onIconTouch={() =>
-                                    setPasswordVisible(!isPasswordVisible)
-                                }
-                                onBlur={handleBlur('password')}
-                                onChange={handleChange('password')}
-                                value={values.password}
-                                error={touched.password && errors.password}
+                        </Pressable>
+                        <View
+                            style={{
+                                gap: 14,
+                                paddingHorizontal: 30,
+                            }}>
+                            <CustomButton
+                                text="Masuk"
+                                type="primary"
+                                isSubmitting={isSubmitting}
+                                onPress={() => handleSubmit()}
                             />
-                        </View>
-                        <View style={{ gap: 40 }}>
-                            <Pressable style={{ alignSelf: 'flex-end' }}>
-                                <CustomText
-                                    color="greyColor"
-                                    fontFamily="poppinsRegular"
-                                    fontSize="sm"
-                                    text="Lupa password?"
-                                />
-                            </Pressable>
-                            <View
-                                style={{
-                                    gap: 14,
-                                    paddingHorizontal: 30,
-                                }}>
-                                <CustomButton
-                                    text="Masuk"
-                                    type="primary"
-                                    isSubmitting={isSubmitting}
-                                    onPress={() => handleSubmit()}
-                                />
-                                <CustomButton
-                                    text="Daftar"
-                                    type="secondary"
-                                    onPress={() =>
-                                        navigation.navigate('SignUp')
-                                    }
-                                />
-                            </View>
+                            <CustomButton
+                                text="Daftar"
+                                type="secondary"
+                                onPress={() => navigation.navigate('SignUp')}
+                            />
                         </View>
                     </View>
-                </>
+                </View>
             )}
         </Formik>
     );

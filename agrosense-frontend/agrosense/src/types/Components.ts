@@ -21,7 +21,7 @@ export type ScreenLayoutProps = {
 };
 
 export type CustomTextProps = {
-    text: string;
+    text: any;
     fontFamily:
         | 'reemkufiBold'
         | 'reemkufiSemiBold'
@@ -38,6 +38,7 @@ export type CustomTextProps = {
         | 'xxxs'
         | 'xs'
         | 'sm'
+        | 'ssm'
         | 'md'
         | 'lg'
         | 'xl'
@@ -55,6 +56,8 @@ export type CustomTextProps = {
         | 'secLigthTextColor'
         | 'primaryLightColor';
     ellipsizeMode?: boolean;
+    alignCenter?: boolean;
+    textAlign?: 'left' | 'right' | 'center' | 'justify';
 };
 
 export type CustomTextInputProps = {

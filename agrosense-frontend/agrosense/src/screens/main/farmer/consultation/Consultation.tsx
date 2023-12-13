@@ -4,14 +4,20 @@ import { MultiSelect } from 'react-native-element-dropdown';
 import { View } from 'react-native-ui-lib';
 import { CustomButton, CustomText, ScreenLayout } from '../../../../components';
 import { Colors, FontFamily, FontSize } from '../../../../configs';
-import { useGetAllSymptoms } from '../../../../hooks';
-import { FarmerConsultProps, Symptom } from '../../../../types';
+import { useConsultation, useGetAllSymptoms } from '../../../../hooks';
+import { FarmerConsultProps, RootState, Symptom } from '../../../../types';
 import { handleAxiosErr } from '../../../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { consultationResultSlice } from '../../../../slices';
 
 const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const { setConsultationResult } = consultationResultSlice.actions;
     const mutationGetAllPest = useGetAllSymptoms();
+    const mutationConsultation = useConsultation();
     const [symptoms, setSymptoms] = React.useState<Symptom[]>([]);
     const [selected, setSelected] = React.useState<string[]>([]);
+    const { _id } = useSelector((state: RootState) => state.farmerData);
 
     const structuredSymptoms = symptoms.map(symptom => {
         return {
@@ -19,6 +25,30 @@ const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
             value: symptom.symptomCode,
         };
     });
+
+    const onSubmit = () => {
+        mutationConsultation.mutate(
+            {
+                userId: _id,
+                symptomCodes: selected,
+            },
+            {
+                onSuccess: resp => {
+                    console.log(
+                        'resp',
+                        JSON.stringify(resp.data.consultationResult, null, 4),
+                    );
+                    dispatch(
+                        setConsultationResult(resp.data.consultationResult),
+                    );
+                    navigation.navigate('FarmerConsultResult');
+                },
+                onError: err => {
+                    handleAxiosErr(err);
+                },
+            },
+        );
+    };
 
     React.useEffect(() => {
         mutationGetAllPest.mutate(undefined, {
@@ -84,7 +114,6 @@ const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
                         value={selected}
                         onChange={item => {
                             setSelected(item);
-                            console.log('selected', selected);
                         }}
                         selectedStyle={styles.selectedStyle}
                         itemContainerStyle={styles.itemContainerStyle}
@@ -102,10 +131,7 @@ const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
                 <CustomButton
                     text="Konsultasi"
                     type="primary"
-                    onPress={() => {
-                        console.log('Gejala terpilih', selected);
-                        navigation.navigate('FarmerConsultResult');
-                    }}
+                    onPress={onSubmit}
                     disable={selected.length < 2}
                 />
             </View>

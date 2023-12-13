@@ -16,6 +16,8 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.16",
     "@reduxjs/toolkit": "^1.9.7",
+    "@rneui/base": "^0.0.0-edge.2",
+    "@rneui/themed": "^0.0.0-edge.2",
     "axios": "^1.6.0",
     "formik": "^2.4.5",
     "moment": "^2.29.4",

@@ -1,4 +1,4 @@
-import { Case, Consultation, Pest, Solution, Symptom, User } from '../models';
+import { Case, Consultation, Pest, Solution, User } from '../models';
 
 export const consultate = async (req, res) => {
     const { symptomCodes, userId } = req.body;
@@ -81,7 +81,7 @@ export const consultate = async (req, res) => {
         if (slicedSimilarityValues[0].similarityPercentage < 60) {
             const newCase = new Case({
                 caseCode: `K-${cases.length + 1}`,
-                pestCode: slicedSimilarityValues[0].caseCode,
+                pestCode: mainPest.pestCode,
                 symptoms: symptomCodes.map(symptomCode => ({
                     symptomCode,
                 })),
@@ -113,17 +113,15 @@ export const consultate = async (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: {
-                consultationResult: {
-                    status: newConsultation.consultationResult.status,
-                    mainPest: {
-                        name: mainPest.name,
-                        solution: mainPestSolution.map(item => item.name),
-                        similarityPercentage:
-                            slicedSimilarityValues[0].similarityPercentage,
-                    },
-                    otherPests: otherPestResponse,
+            consultationResult: {
+                consultationStatus: newConsultation.consultationResult.status,
+                mainPest: {
+                    name: mainPest.name,
+                    solution: mainPestSolution.map(item => item.name),
+                    similarityPercentage:
+                        slicedSimilarityValues[0].similarityPercentage,
                 },
+                otherPests: otherPestResponse,
             },
         });
     } catch (error) {

@@ -9,6 +9,7 @@ const CustomText: React.FC<CustomTextProps> = ({
     fontSize,
     text,
     ellipsizeMode = false,
+    textAlign,
 }) => {
     return (
         <Text
@@ -18,6 +19,7 @@ const CustomText: React.FC<CustomTextProps> = ({
                 fontFamily: `${FontFamily[fontFamily]}`,
                 fontSize: FontSize[fontSize],
                 color: Colors[color],
+                textAlign,
             }}>
             {text}
         </Text>

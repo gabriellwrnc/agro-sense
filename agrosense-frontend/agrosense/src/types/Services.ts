@@ -47,3 +47,20 @@ export type GetAllPestsResponse = {
     status: string;
     data: Pest[];
 };
+
+export type Symptom = {
+    name: string;
+    symptomCode: string;
+    pestCode: string[];
+    weight: [
+        {
+            pestCode: string;
+            weightValue: number;
+        },
+    ];
+};
+
+export type GetAllSymptomsResponse = {
+    status: string;
+    data: Symptom[];
+};

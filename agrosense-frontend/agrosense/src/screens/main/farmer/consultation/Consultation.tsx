@@ -1,62 +1,45 @@
 import React from 'react';
-import { MultipleSelectList } from 'react-native-dropdown-select-list';
+import { StyleSheet } from 'react-native';
+import { MultiSelect } from 'react-native-element-dropdown';
 import { View } from 'react-native-ui-lib';
 import { CustomButton, CustomText, ScreenLayout } from '../../../../components';
 import { Colors, FontFamily, FontSize } from '../../../../configs';
-import { FarmerConsultProps } from '../../../../types';
+import { useGetAllSymptoms } from '../../../../hooks';
+import { FarmerConsultProps, Symptom } from '../../../../types';
+import { handleAxiosErr } from '../../../../utils';
 
 const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
-    const [selected, setSelected] = React.useState([]);
+    const mutationGetAllPest = useGetAllSymptoms();
+    const [symptoms, setSymptoms] = React.useState<Symptom[]>([]);
+    const [selected, setSelected] = React.useState<string[]>([]);
 
-    const data: {
-        key: string;
-        value: string;
-        disabled?: boolean;
-    }[] = [
-        {
-            key: '1',
-            value: 'Pada fase anakan jumlah anakan berkurang',
-        },
-        {
-            key: '2',
-            value: 'Di daerah sekitar lubang bekas hisapan berubah warna menjadi coklat menyerupai gejala penyakit blas',
-        },
-        {
-            key: '3',
-            value: 'Adanya ngengat di pertanaman dan larva di dalam batang padi',
-        },
-        {
-            key: '5',
-            value: 'Adanya beluk (malai hampa) pada tanaman stadia generative',
-        },
-        {
-            key: '6',
-            value: 'Anakan mati yang disebut sundep pada tanaman stadia vegetative',
-        },
-        {
-            key: '7',
-            value: 'Warna tanaman berubah coklat kemerahan atau kuning',
-        },
-        {
-            key: '7',
-            value: 'Warna tanaman berubah coklat kemerahan atau kuning',
-        },
-        {
-            key: '7',
-            value: 'Warna tanaman berubah coklat kemerahan atau kuning',
-        },
-        {
-            key: '7',
-            value: 'Warna tanaman berubah coklat kemerahan atau kuning',
-        },
-    ];
+    const structuredSymptoms = symptoms.map(symptom => {
+        return {
+            label: symptom.name,
+            value: symptom.symptomCode,
+        };
+    });
+
+    React.useEffect(() => {
+        mutationGetAllPest.mutate(undefined, {
+            onSuccess: resp => {
+                setSymptoms(resp.data.data);
+            },
+            onError: err => {
+                handleAxiosErr(err);
+            },
+        });
+    }, []);
 
     return (
-        <ScreenLayout backgroundColor="light" flex center padding={10}>
+        <ScreenLayout backgroundColor="light" padding={10}>
             <View
                 flex
                 width={'100%'}
-                style={{ gap: 26, justifyContent: 'center' }}>
+                style={{
+                    gap: selected.length < 2 ? 18 : 10,
+                    paddingBottom: 60,
+                }}>
                 <View>
                     <CustomText
                         color="primaryColor"
@@ -77,81 +60,101 @@ const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
                         />
                     )}
                 </View>
-                <View
-                    flex
-                    style={{
-                        justifyContent: 'center',
-                        zIndex: 1,
-                    }}>
-                    <MultipleSelectList
-                        setSelected={(val: any) => {
-                            console.log('val', val);
-                            setSelected(val);
-                        }}
-                        data={data}
+                <View style={{ gap: 10 }}>
+                    {selected.length > 0 && (
+                        <CustomText
+                            color="primaryColor"
+                            fontFamily="poppinsSemiBold"
+                            fontSize="sm"
+                            text={`Gejala yang dipilih: ${selected.length}`}
+                        />
+                    )}
+                    <MultiSelect
+                        style={styles.dropdown}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        search
+                        data={structuredSymptoms}
+                        labelField="label"
+                        valueField="value"
                         placeholder="Pilih gejala"
                         searchPlaceholder="Cari gejala"
-                        boxStyles={{
-                            borderColor: Colors.primaryColor,
-                            borderRadius: 10,
-                            borderWidth: 2,
-                            alignItems: 'center',
-                            backgroundColor: Colors.bgColor,
+                        value={selected}
+                        onChange={item => {
+                            setSelected(item);
+                            console.log('selected', selected);
                         }}
-                        inputStyles={{
-                            color: Colors.darkTextColor,
-                            fontFamily: FontFamily.poppinsRegular,
-                            fontSize: FontSize.sm,
-                        }}
-                        dropdownTextStyles={{
-                            color: Colors.darkTextColor,
-                            fontFamily: FontFamily.poppinsMedium,
-                            fontSize: FontSize.sm,
-                        }}
-                        dropdownStyles={{
-                            borderColor: Colors.primaryColor,
-                            backgroundColor: Colors.bgColor,
-                        }}
-                        checkBoxStyles={{
-                            borderColor: Colors.primaryColor,
-                            borderWidth: 2,
-                        }}
-                        badgeStyles={{
-                            backgroundColor: Colors.tabBarColor,
-                        }}
-                        labelStyles={{
-                            color: Colors.primaryColor,
-                            fontFamily: FontFamily.poppinsSemiBold,
-                            fontSize: FontSize.sm,
-                        }}
-                        badgeTextStyles={{
-                            fontFamily: FontFamily.poppinsRegular,
-                            fontSize: FontSize.xs,
-                        }}
-                        save="key"
-                        maxHeight={490}
-                        onSelect={() => console.log('selected', selected)}
-                        label={`Jumlah gejala yang dipilih: ${selected.length}`}
-                        notFoundText="Tidak ada gejala yang ditemukan."
+                        selectedStyle={styles.selectedStyle}
+                        itemContainerStyle={styles.itemContainerStyle}
+                        itemTextStyle={styles.itemTextStyle}
                     />
                 </View>
-                <View
-                    style={{
-                        justifyContent: 'flex-end',
-                    }}>
-                    <CustomButton
-                        text="Konsultasi"
-                        type="primary"
-                        onPress={() => {
-                            console.log('Gejala terpilih', selected);
-                            navigation.navigate('FarmerConsultResult');
-                        }}
-                        disable={selected.length < 2}
-                    />
-                </View>
+            </View>
+            <View
+                style={{
+                    position: 'absolute',
+                    width: '100%',
+                    bottom: 20,
+                    left: 10,
+                }}>
+                <CustomButton
+                    text="Konsultasi"
+                    type="primary"
+                    onPress={() => {
+                        console.log('Gejala terpilih', selected);
+                        navigation.navigate('FarmerConsultResult');
+                    }}
+                    disable={selected.length < 2}
+                />
             </View>
         </ScreenLayout>
     );
 };
 
 export default Consultation;
+
+const styles = StyleSheet.create({
+    dropdown: {
+        borderWidth: 1.5,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.primaryColor,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+        fontFamily: FontFamily.poppinsRegular,
+    },
+    selectedTextStyle: {
+        fontSize: 14,
+        fontFamily: FontFamily.poppinsMedium,
+        color: Colors.primaryColor,
+    },
+    selectedStyle: {
+        borderRadius: 12,
+        padding: 10,
+        borderWidth: 1.5,
+        borderColor: Colors.greyColor,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 14,
+        fontFamily: FontFamily.poppinsRegular,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    itemContainerStyle: {
+        backgroundColor: 'white',
+    },
+    itemTextStyle: {
+        fontFamily: FontFamily.poppinsRegular,
+        fontSize: FontSize.sm,
+        color: Colors.primaryColor,
+    },
+});

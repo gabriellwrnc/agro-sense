@@ -1,13 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FormikErrors } from 'formik';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
-import {
-    AuthParamList,
-    FarmerHomeTabParamList,
-    RootParamList,
-} from './Navigators';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { CompositeNavigationProp } from '@react-navigation/native';
+import { AuthParamList, RootParamList } from './Navigators';
 
 export type ScreenLayoutProps = {
     children: React.ReactNode;
@@ -51,6 +45,7 @@ export type CustomTextProps = {
         | 'secColor'
         | 'bgColor'
         | 'errorColor'
+        | 'boldSuccessColor'
         | 'greyColor'
         | 'ligthTextColor'
         | 'secLigthTextColor'

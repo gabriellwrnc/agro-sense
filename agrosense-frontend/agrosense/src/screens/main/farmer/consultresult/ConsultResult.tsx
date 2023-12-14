@@ -1,4 +1,4 @@
-import { ListItem } from '@rneui/base';
+import { Icon, ListItem } from '@rneui/base';
 import React from 'react';
 import { View } from 'react-native-ui-lib';
 import { useSelector } from 'react-redux';
@@ -20,67 +20,87 @@ const ConsultResult: React.FC = () => {
     console.log('consultResult', JSON.stringify(otherPests, null, 4));
     console.log('consultResult', JSON.stringify(mainPest, null, 4));
     return (
-        <ScreenLayout backgroundColor="light" flex padding={10}>
-            <View center>
-                <CustomText
-                    color="primaryColor"
-                    fontFamily="poppinsBold"
-                    fontSize="ssm"
-                    text="Hama yang menyerang padi anda adalah"
-                />
-            </View>
+        <ScreenLayout backgroundColor="light" padding={10}>
+            {mainPest.similarityPercentage > 60 ? (
+                <View
+                    flex
+                    row
+                    style={{
+                        backgroundColor: Colors.bgSuccessColor,
+                    }}>
+                    <CustomText
+                        color="primaryColor"
+                        fontFamily="poppinsSemiBold"
+                        fontSize="ssm"
+                        text="Kondisi padi anda sehat"
+                    />
+                </View>
+            ) : (
+                <View
+                    flex
+                    row
+                    style={{
+                        backgroundColor: Colors.bgErrorColor,
+                        borderWidth: 1,
+                        borderColor: Colors.errorColor,
+                    }}>
+                    <CustomText
+                        color="primaryColor"
+                        fontFamily="poppinsSemiBold"
+                        fontSize="ssm"
+                        text="Kondisi padi anda sakit"
+                    />
+                </View>
+            )}
             <View center>
                 <CustomText
                     color="primaryColor"
                     fontFamily="poppinsSemiBold"
+                    fontSize="ssm"
+                    text="Hama yang menyerang padi anda adalah"
+                />
+            </View>
+            <View center marginT-30>
+                <CustomText
+                    color={
+                        mainPest.similarityPercentage > 60
+                            ? 'boldSuccessColor'
+                            : 'errorColor'
+                    }
+                    fontFamily="poppinsBold"
                     fontSize="xl"
                     text={regularName}
                 />
                 <CustomText
-                    color="primaryColor"
+                    color={
+                        mainPest.similarityPercentage > 60
+                            ? 'boldSuccessColor'
+                            : 'errorColor'
+                    }
                     fontFamily="poppinsMediumItalic"
                     fontSize="xl"
                     text={italicName}
                 />
             </View>
-            <View center>
+            <View center marginT-30>
                 <CustomText
                     textAlign="center"
                     color="primaryColor"
                     fontFamily="poppinsRegular"
                     fontSize="sm"
-                    text="dengan nilai kesamaan dengan kasus sebelumnya sebesar"
+                    text="dengan presentase kesamaan dengan kasus sebelumnya pada database kami sebesar"
                 />
             </View>
-            <View center>
+            <View center marginT-20>
                 <CustomText
-                    color="primaryColor"
+                    color={
+                        mainPest.similarityPercentage > 60
+                            ? 'boldSuccessColor'
+                            : 'errorColor'
+                    }
                     fontFamily="poppinsBold"
                     fontSize="xl"
                     text={`${mainPest.similarityPercentage}%`}
-                />
-            </View>
-            <View>
-                <CustomText
-                    color="primaryColor"
-                    fontFamily="poppinsRegular"
-                    fontSize="sm"
-                    text={
-                        <>
-                            <CustomText
-                                text="Solusi"
-                                color="primaryColor"
-                                fontSize="sm"
-                                fontFamily="poppinsBold"
-                            />
-                            <CustomText
-                                text={` yang disarankan kepada anda adalah:`}
-                                color="primaryColor"
-                                fontSize="sm"
-                                fontFamily="poppinsRegular"
-                            />
-                        </>
-                    }
                 />
             </View>
             <ListItem.Accordion
@@ -89,59 +109,49 @@ const ConsultResult: React.FC = () => {
                         fontFamily="poppinsBold"
                         fontSize="md"
                         color="primaryColor"
-                        text="Lihat Instruksi"
+                        text="Solusi"
                     />
                 }
                 containerStyle={{
-                    flex: 1,
-                    flexDirection: 'row',
                     justifyContent: 'space-between',
                     backgroundColor: Colors.bgSuccessColor,
                     borderRadius: 6,
-                    padding: 16,
+                    marginTop: 20,
                     alignItems: 'center',
                 }}
+                icon={
+                    <Icon
+                        name="chevron-down"
+                        type="feather"
+                        color={Colors.primaryColor}
+                    />
+                }
                 isExpanded={solutionAccordion}
                 onPress={() => {
                     setSolutionAccordion(!solutionAccordion);
                 }}>
                 <View
-                    flex
-                    row
-                    spread
                     style={{
                         backgroundColor: Colors.primaryBgColor,
                         borderBottomEndRadius: 6,
                         borderBottomStartRadius: 6,
-                        // top: -28,
-                        // marginBottom: -28,
                         padding: 16,
                     }}>
-                    <CustomText
-                        fontFamily="poppinsBold"
-                        fontSize="md"
-                        color="ligthTextColor"
-                        text="fsdfasfsadfasdfsadfasdfa"
-                    />
-                    <CustomText
-                        fontFamily="poppinsBold"
-                        fontSize="md"
-                        color="ligthTextColor"
-                        text="fsdfasfsadfasdfsadfasdfa"
-                    />
+                    {mainPest.solution.map(solution => {
+                        return (
+                            <View key={solution}>
+                                <CustomText
+                                    textAlign="justify"
+                                    color="ligthTextColor"
+                                    fontFamily="poppinsMedium"
+                                    fontSize="sm"
+                                    text={`* ${solution}`}
+                                />
+                            </View>
+                        );
+                    })}
                 </View>
             </ListItem.Accordion>
-            {mainPest.solution.map((solution, index) => (
-                <View key={index}>
-                    <CustomText
-                        textAlign="justify"
-                        color="primaryColor"
-                        fontFamily="poppinsRegular"
-                        fontSize="sm"
-                        text={`- ${solution}`}
-                    />
-                </View>
-            ))}
         </ScreenLayout>
     );
 };

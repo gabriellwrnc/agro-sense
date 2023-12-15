@@ -1,0 +1,21 @@
+CONFUSION MATRIX
+
+CBR	=	TP : 5
+		TN : 0
+		FP : 5
+		FN : 0
+
+DS	=	TP : 8
+		TN : 0
+		FP : 2
+		FN : 0
+
+Accuracy CBR = (5+0/5+0+5+0)*100% = 50%
+Accuracy DS = (8+0/8+0+2+0)*100% = 80%
+
+Precision CBR = (5/10)*100% = 50%
+Precision DS = (8/10)*100% = 80%
+
+Recall CBR = (5/5)*100% = 100%
+Recall DS = (8/8)*100% = 100%
+

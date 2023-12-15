@@ -1,0 +1,123 @@
+DATA UJI 
+1.      "G-23",
+        "G-02",
+        "G-10",
+        "G-05",
+        "G-06",
+        "G-09"
+	
+	HASIL CBR = Kepinding Tanah (Scotinophara Coarctata)
+	PERSENTAGE = 45.45
+	HASIL = SESUAI
+
+2.	"G-10",
+        "G-12",
+        "G-17",
+        "G-32"
+
+	HASIL CBR = Tikus Sawah (Rattus argentiventer)
+	PERSENTAGE = 33.33
+	HASIL = SESUAI
+
+3.      "G-02",
+        "G-03",
+        "G-11",
+        "G-13",
+        "G-32"
+
+	HASIL CBR = Burung (Aves)
+	PERSENTAGE = 75.86
+	HASIL = SESUAI
+
+4.      "G-03",
+        "G-04",
+        "G-11",
+        "G-15",
+        "G-21",
+        "G-25",
+        "G-26",
+        "G-28",
+        "G-31",
+        "G-05",
+        "G-06",
+        "G-09"
+
+	HASIL CBR = Ulat jengkal-palsu hijau (green semilooper)
+	PERSENTAGE = 100
+	HASIL = TIDAK SESUAI
+
+5.      "G-23",
+        "G-02",
+        "G-04",
+        "G-11",
+        "G-13",
+        "G-14",
+        "G-29",
+        "G-08",
+        "G-32",
+        "G-05",
+        "G-07",
+        "G-09"
+
+	HASIL CBR = Burung (Aves)
+	PERSENTAGE = 100
+	HASIL = TIDAK SESUAI
+
+6.      "G-11",
+        "G-12",
+        "G-26",
+        "G-30",
+        "G-31",
+        "G-05"
+
+	HASIL CBR = Lalat bibit (Rice whorl maggot)
+	PERSENTAGE = 100
+	HASIL = SESUAI
+
+7	"G-23",
+        "G-03",
+        "G-04",
+        "G-11",
+        "G-12",
+        "G-13",
+        "G-17",
+        "G-18",
+        "G-08"
+
+	HASIL CBR = Tikus Sawah (Rattus argentiventer)
+	PERSENTAGE = 66.67
+	HASIL = TIDAK SESUAI
+
+8.      "G-14",
+        "G-16",
+        "G-17",
+        "G-21",
+        "G-25",
+        "G-29",
+        "G-30",
+        "G-31"
+
+	HASIL CBR = Lalat bibit (Rice whorl maggot)
+	PERSENTAGE = 100
+	HASIL = SESUAI
+
+9.  	"G-13",
+        "G-24",
+        "G-25",
+        "G-26",
+        "G-29"
+
+	HASIL CBR = Ulat jengkal-palsu hijau (green semilooper)
+	PERSENTAGE = 53.33
+	HASIL = TIDAK SESUAI
+
+10.     "G-03",
+        "G-04",
+        "G-11",
+        "G-29",
+        "G-31",
+        "G-05"
+
+	HASIL CBR = Lalat bibit (Rice whorl maggot)
+	PERSENTAGE = 46.67
+	HASIL = TIDAK SESUAI

@@ -19,6 +19,8 @@ const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
     const [selected, setSelected] = React.useState<string[]>([]);
     const { _id } = useSelector((state: RootState) => state.farmerData);
 
+    console.log('selected', selected);
+
     const structuredSymptoms = symptoms.map(symptom => {
         return {
             label: symptom.name,

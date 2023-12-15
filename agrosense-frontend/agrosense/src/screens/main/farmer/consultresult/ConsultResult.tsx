@@ -21,37 +21,6 @@ const ConsultResult: React.FC = () => {
     console.log('consultResult', JSON.stringify(mainPest, null, 4));
     return (
         <ScreenLayout backgroundColor="light" padding={10}>
-            {mainPest.similarityPercentage > 60 ? (
-                <View
-                    flex
-                    row
-                    style={{
-                        backgroundColor: Colors.bgSuccessColor,
-                    }}>
-                    <CustomText
-                        color="primaryColor"
-                        fontFamily="poppinsSemiBold"
-                        fontSize="ssm"
-                        text="Kondisi padi anda sehat"
-                    />
-                </View>
-            ) : (
-                <View
-                    flex
-                    row
-                    style={{
-                        backgroundColor: Colors.bgErrorColor,
-                        borderWidth: 1,
-                        borderColor: Colors.errorColor,
-                    }}>
-                    <CustomText
-                        color="primaryColor"
-                        fontFamily="poppinsSemiBold"
-                        fontSize="ssm"
-                        text="Kondisi padi anda sakit"
-                    />
-                </View>
-            )}
             <View center>
                 <CustomText
                     color="primaryColor"
@@ -103,6 +72,25 @@ const ConsultResult: React.FC = () => {
                     text={`${mainPest.similarityPercentage}%`}
                 />
             </View>
+            {mainPest.similarityPercentage < 60 && (
+                <View
+                    style={{
+                        backgroundColor: Colors.bgErrorColor,
+                        borderWidth: 1,
+                        borderColor: Colors.errorColor,
+                        padding: 10,
+                        borderRadius: 6,
+                        marginTop: 20,
+                    }}>
+                    <CustomText
+                        textAlign="justify"
+                        color="errorColor"
+                        fontFamily="poppinsSemiBold"
+                        fontSize="sm"
+                        text="Ini hanya hasil sementara karena, konsultasi anda merupakan kasus baru, silahkan menunggu hasil konsultasi terbaru pada halaman riwayat konsultasi. "
+                    />
+                </View>
+            )}
             <ListItem.Accordion
                 content={
                     <CustomText

@@ -79,8 +79,10 @@ export const consultate = async (req, res) => {
         }
 
         if (slicedSimilarityValues[0].similarityPercentage < 60) {
+            const casesCount = await Case.countDocuments();
+
             const newCase = new Case({
-                caseCode: `K-${cases.length + 1}`,
+                caseCode: `K-${casesCount + 1}`,
                 pestCode: mainPest.pestCode,
                 symptoms: symptomCodes.map(symptomCode => ({
                     symptomCode,

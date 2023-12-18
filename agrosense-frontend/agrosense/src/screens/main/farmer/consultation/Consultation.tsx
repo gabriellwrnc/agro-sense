@@ -43,7 +43,7 @@ const Consultation: React.FC<FarmerConsultProps> = ({ navigation }) => {
                     dispatch(
                         setConsultationResult(resp.data.consultationResult),
                     );
-                    navigation.navigate('FarmerConsultResult');
+                    navigation.replace('FarmerConsultResult');
                 },
                 onError: err => {
                     handleAxiosErr(err);

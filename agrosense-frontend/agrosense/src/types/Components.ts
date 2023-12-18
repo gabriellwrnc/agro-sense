@@ -109,3 +109,9 @@ export type FormSignUpProps = {
 export type CarouselHomeProps = {
     imageUrls: string[];
 };
+
+export type AdminCardDataProps = {
+    title: string;
+    totalData: number;
+    onPress: () => void;
+};

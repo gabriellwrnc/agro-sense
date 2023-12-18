@@ -4,4 +4,4 @@ export { default as CustomTextInput } from './CustomTextInput';
 export { default as CustomToast } from './CustomToast';
 export { default as ScreenLayout } from './ScreenLayout';
 export { default as HamaCard } from './HamaCard';
-
+export { default as AdminCardData } from './AdminCardData';

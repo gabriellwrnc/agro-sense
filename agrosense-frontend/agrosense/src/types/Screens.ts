@@ -22,3 +22,8 @@ export type FarmerConsultProps = NativeStackScreenProps<
     FarmerStackParamList,
     'FarmerConsult'
 >;
+
+export type FarmerConsultResultProps = NativeStackScreenProps<
+    FarmerStackParamList & FarmerHomeTabParamList,
+    'FarmerConsultResult'
+>;

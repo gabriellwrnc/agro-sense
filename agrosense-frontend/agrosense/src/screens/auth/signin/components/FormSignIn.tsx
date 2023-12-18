@@ -20,7 +20,11 @@ import {
     setDataToLocalStorage,
 } from '../../../../configs';
 import { useSignIn } from '../../../../hooks';
-import { farmerDataSlice, modalSlice } from '../../../../slices';
+import {
+    farmerDataSlice,
+    modalSlice,
+    userRootNavDetailsSlice,
+} from '../../../../slices';
 import {
     FormSignInProps,
     SignInRequest,
@@ -33,6 +37,7 @@ const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
     const dispatch = useDispatch();
     const { hideModal, showModal } = modalSlice.actions;
     const { setFarmerData } = farmerDataSlice.actions;
+    const { setLoggedIn } = userRootNavDetailsSlice.actions;
     const mutationSignIn = useSignIn();
 
     const [isPasswordVisible, setPasswordVisible] =
@@ -78,10 +83,9 @@ const FormSignIn: React.FC<FormSignInProps> = ({ navigation }) => {
                 );
                 dispatch(setFarmerData(resp.data.data));
                 if (resp.data.data.role === 'farmer') {
-                    navigation.navigate('FarmerScreenStacks');
+                    dispatch(setLoggedIn({ isLoggedIn: true, role: 'farmer' }));
                 } else if (resp.data.data.role === 'admin') {
-                    console.log('Anda admin');
-                    // navigation.navigate('AdminScreenStacks');
+                    dispatch(setLoggedIn({ isLoggedIn: true, role: 'admin' }));
                 }
                 setTimeout(() => {
                     dispatch(hideModal());

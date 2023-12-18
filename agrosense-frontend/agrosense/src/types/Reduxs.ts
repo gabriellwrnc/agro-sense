@@ -22,5 +22,10 @@ export interface ConsultationResulState {
     otherPests: ConsultationPestData[];
 }
 
+export interface UserRootNavDetailsState {
+    isLoggedIn: boolean;
+    role: string;
+}
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

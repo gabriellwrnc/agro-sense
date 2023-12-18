@@ -127,15 +127,15 @@ const FarmerHomeTabNav: React.FC = () => {
                 },
             })}>
             <Tab.Screen
-                name="FarmerHistory"
-                component={FarmerHistory}
+                name="FarmerHome"
+                component={FarmerHome}
                 options={{
                     unmountOnBlur: true,
                 }}
             />
             <Tab.Screen
-                name="FarmerHome"
-                component={FarmerHome}
+                name="FarmerHistory"
+                component={FarmerHistory}
                 options={{
                     unmountOnBlur: true,
                 }}

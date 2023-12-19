@@ -16,9 +16,6 @@ const ConsultResult: React.FC<FarmerConsultResultProps> = ({ navigation }) => {
     const italicNameMatch = /\((.*?)\)/.exec(mainPest.name);
     const italicName = italicNameMatch ? italicNameMatch[0] : '';
 
-    console.log('consultResult', JSON.stringify(consultationStatus, null, 4));
-    console.log('consultResult', JSON.stringify(otherPests, null, 4));
-    console.log('consultResult', JSON.stringify(mainPest, null, 4));
     return (
         <>
             <ScreenLayout backgroundColor="light" padding={10}>

@@ -12,18 +12,22 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     type,
     isSubmitting,
 }) => {
+    let backgroundColor;
+
+    if (disable) {
+        backgroundColor =
+            type === 'primary' ? Colors.primaryBgColor : Colors.bgColor;
+    } else {
+        backgroundColor =
+            type === 'primary' ? Colors.primaryColor : Colors.bgColor;
+    }
+
     return (
         <Pressable
             style={{
-                backgroundColor: disable
-                    ? type === 'primary'
-                        ? Colors.primaryBgColor
-                        : Colors.bgColor
-                    : type === 'primary'
-                    ? Colors.primaryColor
-                    : Colors.bgColor,
+                backgroundColor,
                 paddingVertical: 6,
-                paddingHorizontal: 14,
+                paddingHorizontal: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 6,

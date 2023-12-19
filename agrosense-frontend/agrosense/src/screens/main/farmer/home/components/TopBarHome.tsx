@@ -7,12 +7,19 @@ import {
     removeDataToLocalStorage,
 } from '../../../../../configs';
 import { Pressable } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userRootNavDetailsSlice } from '../../../../../slices';
+import { RootState } from '../../../../../types';
 
 const TopBarHome: React.FC = () => {
     const dispatch = useDispatch();
     const { loggedOut } = userRootNavDetailsSlice.actions;
+    const { name } = useSelector((state: RootState) => state.farmerData);
+    const destructName = name.split(' ');
+    const firstName = destructName[0];
+    const lastName = destructName[destructName.length - 1];
+    const firstNameFirstLetter = firstName[0].toUpperCase();
+    const lastNameFirstLetter = lastName[0].toUpperCase();
 
     return (
         <View
@@ -36,7 +43,7 @@ const TopBarHome: React.FC = () => {
                     color="ligthTextColor"
                     fontFamily="poppinsSemiBold"
                     fontSize="lg"
-                    text="NamaPengguna!"
+                    text={`${firstName} ${lastName}!`}
                 />
             </View>
             <Pressable
@@ -50,8 +57,21 @@ const TopBarHome: React.FC = () => {
                     dispatch(loggedOut());
                     removeDataToLocalStorage(TOKEN);
                     removeDataToLocalStorage(ROLE);
-                }}
-            />
+                }}>
+                <View
+                    center
+                    style={{
+                        width: 40,
+                        height: 38,
+                    }}>
+                    <CustomText
+                        color="primaryColor"
+                        fontFamily="reemkufiBold"
+                        fontSize="lg"
+                        text={`${firstNameFirstLetter}${lastNameFirstLetter}`}
+                    />
+                </View>
+            </Pressable>
         </View>
     );
 };

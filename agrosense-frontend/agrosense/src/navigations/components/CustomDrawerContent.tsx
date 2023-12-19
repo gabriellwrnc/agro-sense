@@ -30,7 +30,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
                 <CustomText
                     text="Agrosense"
                     fontFamily="reemkufiBold"
-                    fontSize="xxl"
+                    fontSize="xl2"
                     color="primaryColor"
                 />
             </View>

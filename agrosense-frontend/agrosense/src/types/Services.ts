@@ -84,3 +84,40 @@ export type ConsultationResponse = {
         otherPests: ConsultationPestData[];
     };
 };
+
+export type Case = {
+    caseCode: string;
+    pestCode: string;
+    symptoms: [
+        {
+            symptomCode: string;
+            weight?: number;
+        },
+    ];
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type GetAllCaseResponse = {
+    status: string;
+    data: {
+        unverifiedCaseCount: number;
+        cases: Case[];
+    };
+};
+
+export type Farmer = {
+    _id: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    role: string;
+    firebaseId: string;
+    consultationCount: number;
+};
+
+export type GetAllFarmersResponse = {
+    status: string;
+    data: Farmer[];
+};

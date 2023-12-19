@@ -1,10 +1,13 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
+    AdminHomeDrawerParamList,
+    AdminStackParamList,
     AuthParamList,
     FarmerHomeTabParamList,
     FarmerStackParamList,
     RootParamList,
 } from './Navigators';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
 export type SignInProps = NativeStackScreenProps<
     AuthParamList & RootParamList,
@@ -26,4 +29,9 @@ export type FarmerConsultProps = NativeStackScreenProps<
 export type FarmerConsultResultProps = NativeStackScreenProps<
     FarmerStackParamList & FarmerHomeTabParamList,
     'FarmerConsultResult'
+>;
+
+export type AdminHomeProps = DrawerScreenProps<
+    AdminStackParamList & AdminHomeDrawerParamList,
+    'AdminHomeScreen'
 >;

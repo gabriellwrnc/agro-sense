@@ -241,9 +241,12 @@ export const getAllUsers = async (req, res) => {
                 });
 
                 return {
+                    _id: user._id,
                     name: user.name,
                     email: user.email,
                     phoneNumber: user.phoneNumber,
+                    role: user.role,
+                    firebaseId: user.firebaseId,
                     consultationCount: userConsultations.length,
                 };
             }),
@@ -251,11 +254,7 @@ export const getAllUsers = async (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: {
-                data: {
-                    users: userResponse,
-                },
-            },
+            data: userResponse,
         });
     } catch (error) {
         console.log('error', error);
@@ -272,11 +271,9 @@ export const getAllCases = async (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: {
-                data: {
-                    unverifiedCaseCount: unverifiedCase.length,
-                    cases,
-                },
+            data: {
+                unverifiedCaseCount: unverifiedCase.length,
+                cases,
             },
         });
     } catch (error) {}

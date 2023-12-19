@@ -1,4 +1,4 @@
-import { View } from 'react-native-ui-lib';
+import { Badge, View } from 'react-native-ui-lib';
 import { AdminCardData, ScreenLayout } from '../../../../components';
 import {
     useGetAllCase,
@@ -9,26 +9,31 @@ import {
 import React from 'react';
 import { handleAxiosErr } from '../../../../utils';
 import { AdminHomeProps } from '../../../../types';
+import { Colors } from '../../../../configs';
 
 const Home: React.FC<AdminHomeProps> = ({ navigation }) => {
     const mutationGetAllCase = useGetAllCase();
     const mutationGetAllPest = useGetAllPest();
     const mutationGetAllSymptom = useGetAllSymptoms();
     const mutationGetAllFarmer = useGetAllFarmers();
-    const [caseCount, setCaseCount] = React.useState<number>(0);
+    const [caseDetail, setCaseDetail] = React.useState<{
+        unverifiedCaseCount: number;
+        caseCount: number;
+    }>({
+        unverifiedCaseCount: 0,
+        caseCount: 0,
+    });
     const [pestCount, setPestCount] = React.useState<number>(0);
     const [symptomCount, setSymptomCount] = React.useState<number>(0);
     const [farmerCount, setFarmerCount] = React.useState<number>(0);
 
-    console.log('caseCount', caseCount);
-    console.log('pestCount', pestCount);
-    console.log('symptomCount', symptomCount);
-    console.log('farmerCount', farmerCount);
-
     React.useEffect(() => {
         mutationGetAllCase.mutate(undefined, {
             onSuccess: resp => {
-                setCaseCount(resp.data.data.cases.length);
+                setCaseDetail({
+                    unverifiedCaseCount: resp.data.data.unverifiedCaseCount,
+                    caseCount: resp.data.data.cases.length,
+                });
             },
             onError: err => {
                 handleAxiosErr(err);
@@ -66,11 +71,29 @@ const Home: React.FC<AdminHomeProps> = ({ navigation }) => {
                 style={{
                     gap: 10,
                 }}>
-                <AdminCardData
-                    onPress={() => navigation.navigate('AdminCaseDataScreen')}
-                    title="Kasus"
-                    totalData={caseCount}
-                />
+                <View>
+                    <AdminCardData
+                        onPress={() =>
+                            navigation.navigate('AdminCaseDataScreen')
+                        }
+                        title="Kasus"
+                        totalData={caseDetail.caseCount}
+                    />
+                    {caseDetail.unverifiedCaseCount > 0 && (
+                        <View
+                            style={{
+                                position: 'absolute',
+                                right: -6,
+                                top: -8,
+                            }}>
+                            <Badge
+                                label={'!'}
+                                size={24}
+                                backgroundColor={Colors.errorColor}
+                            />
+                        </View>
+                    )}
+                </View>
                 <AdminCardData
                     onPress={() => navigation.navigate('AdminFarmerDataScreen')}
                     title="Pengguna"

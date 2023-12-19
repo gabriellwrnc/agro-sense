@@ -5,6 +5,7 @@ export const Colors = {
     secColor: '#A3D9A3',
     errorColor: '#b23e36',
     greyColor: '#A1A3A1',
+    softGreyColor: '#d9dad9',
     boldErrorColor: '#b23e36',
     boldSuccessColor: '#33ab4d',
     boldInfoColor: '#3359ab',

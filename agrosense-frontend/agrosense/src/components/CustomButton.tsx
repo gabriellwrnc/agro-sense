@@ -22,7 +22,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
                     : type === 'primary'
                     ? Colors.primaryColor
                     : Colors.bgColor,
-                padding: 6,
+                paddingVertical: 6,
+                paddingHorizontal: 14,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 6,

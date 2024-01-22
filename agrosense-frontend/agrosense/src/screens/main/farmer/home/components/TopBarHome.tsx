@@ -18,8 +18,8 @@ const TopBarHome: React.FC = () => {
     const destructName = name.split(' ');
     const firstName = destructName[0];
     const lastName = destructName[destructName.length - 1];
-    const firstNameFirstLetter = firstName[0].toUpperCase();
-    const lastNameFirstLetter = lastName[0].toUpperCase();
+    const firstNameFirstLetter = firstName[0]?.toUpperCase();
+    const lastNameFirstLetter = lastName[0]?.toUpperCase();
 
     return (
         <View

@@ -38,7 +38,8 @@ export type Pest = {
     name: string;
     pestCode: string;
     description: string;
-    imageUrl: string;
+    imageUrl?: string;
+    caseCount: number;
     symptoms: string[];
     solutions: string[];
 };
@@ -120,4 +121,23 @@ export type Farmer = {
 export type GetAllFarmersResponse = {
     status: string;
     data: Farmer[];
+};
+
+export type AddPestRequest = {
+    name: string;
+    description: string;
+    solutionCodes: string[];
+    symptom: {
+        symptomCode: string;
+        weightValue: number;
+    }[];
+};
+
+export type AddPestResponse = {
+    status: string;
+    data: {
+        pest: Pest;
+        symptoms: string[];
+        solutions: string[];
+    };
 };

@@ -35,3 +35,8 @@ export type AdminHomeProps = DrawerScreenProps<
     AdminStackParamList & AdminHomeDrawerParamList,
     'AdminHomeScreen'
 >;
+
+export type AdminAddPestProps = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminAddPestScreen'
+>;

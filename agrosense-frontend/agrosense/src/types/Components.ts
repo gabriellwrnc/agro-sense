@@ -57,7 +57,7 @@ export type CustomTextProps = {
 
 export type CustomTextInputProps = {
     placeholder: string;
-    icon: React.JSX.Element;
+    icon?: React.JSX.Element;
     rightIcon?: React.JSX.Element;
     onChange?: (e: string) => void;
     onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;

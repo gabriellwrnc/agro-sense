@@ -7,6 +7,7 @@ import {
     addSymptom,
     addVerifiedCase,
     getAllCases,
+    getAllSolutions,
     getAllUsers,
 } from '../controllers';
 
@@ -20,5 +21,6 @@ adminRouter.post('/addPestImage', upload.single('image'), addPestImage);
 adminRouter.post('/addVerifiedCase', addVerifiedCase);
 adminRouter.get('/getAllUsers', getAllUsers);
 adminRouter.get('/getAllCases', getAllCases);
+adminRouter.get('/getAllSolutions', getAllSolutions);
 
 export default adminRouter;

@@ -6,9 +6,9 @@ import { Colors, FontFamily, FontSize } from '../../../../configs';
 import PestTable from './components/PestTable';
 import { useGetAllPest } from '../../../../hooks';
 import { handleAxiosErr } from '../../../../utils';
-import { Pest } from '../../../../types';
+import { AdminHomeProps, Pest } from '../../../../types';
 
-const PestData: React.FC = () => {
+const PestData: React.FC<AdminHomeProps> = ({ navigation }) => {
     const mutationGetAllPest = useGetAllPest();
     const [pest, setPest] = React.useState<Pest[]>([]);
     const [search, setSearch] = React.useState<string>('');
@@ -63,7 +63,7 @@ const PestData: React.FC = () => {
                     <CustomButton
                         text="+ Tambah Hama"
                         onPress={() => {
-                            console.log('Tambah Hama');
+                            navigation.navigate('AdminAddPestScreen');
                         }}
                         type="primary"
                     />

@@ -19,6 +19,7 @@ export const getAllPests = async (req, res) => {
                 pestCode: pest.pestCode,
                 description: pest.description,
                 imageUrl: pest.imageUrl,
+                caseCount: pest.caseCount,
                 symptoms: symptoms.map(symptom => symptom.name),
                 solutions: solutions.map(solution => solution.name),
             });

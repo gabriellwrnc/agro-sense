@@ -25,6 +25,7 @@ export type FarmerHomeTabParamList = {
 
 export type AdminStackParamList = {
     AdminHomeDrawer: undefined;
+    AdminAddPestScreen: undefined;
 };
 
 export type AdminHomeDrawerParamList = {

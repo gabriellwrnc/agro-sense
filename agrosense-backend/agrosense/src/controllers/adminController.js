@@ -19,11 +19,9 @@ export const addSymptom = async (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: {
-                data: {
-                    name: newSymptom.name,
-                    symptomCode: newSymptom.symptomCode,
-                },
+            data: {
+                name: newSymptom.name,
+                symptomCode: newSymptom.symptomCode,
             },
         });
     } catch (error) {
@@ -111,12 +109,10 @@ export const addPest = async (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: {
-                data: {
-                    pest: newPest,
-                    symptoms,
-                    solutions,
-                },
+            data: {
+                pest: newPest,
+                symptoms,
+                solutions,
             },
         });
     } catch (error) {
@@ -212,10 +208,8 @@ export const addVerifiedCase = async (req, res) => {
 
         return res.status(200).json({
             status: 'success',
-            message: {
-                data: {
-                    newCase,
-                },
+            data: {
+                newCase,
             },
         });
     } catch (error) {
@@ -277,4 +271,17 @@ export const getAllCases = async (req, res) => {
             },
         });
     } catch (error) {}
+};
+
+export const getAllSolutions = async (req, res) => {
+    try {
+        const solutions = await Solution.find();
+
+        return res.status(200).json({
+            status: 'success',
+            data: solutions,
+        });
+    } catch (error) {
+        return res.status(500).json({ status: 'fail', message: error });
+    }
 };

@@ -17,7 +17,14 @@ import { handleAxiosErr } from '../../../../utils';
 const Home: React.FC<FarmerHomeProps> = ({ navigation }) => {
     const mutationGetAllPest = useGetAllPest();
     const [pests, setPests] = React.useState<Pest[]>([]);
-    const carouselHomeImageUrls = pests.map(pest => pest.imageUrl).slice(2, 7);
+    const pestImage = pests.map(pest => {
+        if (pest.imageUrl) {
+            return pest.imageUrl;
+        } else {
+            return 'https://firebasestorage.googleapis.com/v0/b/shiphire-fdb0e.appspot.com/o/default-pest.png?alt=media&token=9810dd70-f972-4b23-b762-6187e7c8d089';
+        }
+    });
+    const carouselHomeImageUrls = pestImage.slice(2, 7);
 
     React.useEffect(() => {
         getDataFromLocalStorage(TOKEN).then(res => {
@@ -62,10 +69,13 @@ const Home: React.FC<FarmerHomeProps> = ({ navigation }) => {
                                         const italicName = italicNameMatch
                                             ? italicNameMatch[1]
                                             : '';
+                                        const pestImage = item.imageUrl
+                                            ? item.imageUrl
+                                            : 'https://firebasestorage.googleapis.com/v0/b/shiphire-fdb0e.appspot.com/o/default-pest.png?alt=media&token=9810dd70-f972-4b23-b762-6187e7c8d089';
 
                                         return (
                                             <HamaCard
-                                                imageUrl={item.imageUrl}
+                                                imageUrl={pestImage}
                                                 name={item.name}
                                                 italicName={italicName}
                                                 onPress={() =>

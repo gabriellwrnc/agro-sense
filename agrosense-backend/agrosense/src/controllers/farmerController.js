@@ -45,7 +45,7 @@ export const consultate = async (req, res) => {
         );
         const slicedSimilarityValues = sortedSimilarityValues.slice(0, 4);
 
-        console.log('slicedSimilarityValues', slicedSimilarityValues)
+        console.log('slicedSimilarityValues', slicedSimilarityValues);
 
         let otherPestResponse = [];
         const otherPests = slicedSimilarityValues.slice(1, 4);

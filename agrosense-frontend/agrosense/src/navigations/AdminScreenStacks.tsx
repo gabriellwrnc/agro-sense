@@ -1,6 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Colors, FontFamily } from '../configs';
-import { AdminAddCase, AdminAddPestSymptomWeight } from '../screens';
+import {
+    AdminAddCase,
+    AdminAddPestImage,
+    AdminAddPestSymptomWeight,
+    AdminCaseDetail,
+    AdminVerifyCase,
+    AdminVerifyCaseSymptomWeight,
+} from '../screens';
 import { AdminStackParamList } from '../types';
 import AdminHomeDrawer from './AdminHomeDrawer';
 
@@ -26,6 +33,26 @@ const AdminScreenStacks = () => {
             name: 'AdminAddPestSymptomWeightScreen',
             title: 'Tambah Bobot Gejala',
             component: AdminAddPestSymptomWeight,
+        },
+        {
+            name: 'AdminAddPestImageScreen',
+            title: 'Tambah Gambar Hama',
+            component: AdminAddPestImage,
+        },
+        {
+            name: 'AdminCaseDetailScreen',
+            title: 'Detail Kasus',
+            component: AdminCaseDetail,
+        },
+        {
+            name: 'AdminVerifyCaseScreen',
+            title: 'Verifikasi Kasus',
+            component: AdminVerifyCase,
+        },
+        {
+            name: 'AdminVerifyCaseSymptomWeightScreen',
+            title: 'Tambah Bobot Gejala',
+            component: AdminVerifyCaseSymptomWeight,
         },
     ];
 

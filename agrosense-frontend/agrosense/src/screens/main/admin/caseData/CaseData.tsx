@@ -8,11 +8,11 @@ import {
 } from '../../../../components';
 import { Colors, FontFamily, FontSize } from '../../../../configs';
 import { useGetAllCase } from '../../../../hooks';
-import { Case } from '../../../../types';
+import { AdminHomeProps, Case } from '../../../../types';
 import { handleAxiosErr } from '../../../../utils';
 import CaseTable from './components/CaseTable';
 
-const CaseData: React.FC = () => {
+const CaseData: React.FC<AdminHomeProps> = ({ navigation }) => {
     const mutationGetAllCase = useGetAllCase();
     const [cases, setCases] = React.useState<{
         unverifiedCaseCount: number;
@@ -83,7 +83,7 @@ const CaseData: React.FC = () => {
                         type="primary"
                     />
                 </View>
-                <CaseTable cases={cases.cases} />
+                <CaseTable cases={cases.cases} navigation={navigation} />
             </View>
         </ScreenLayout>
     );

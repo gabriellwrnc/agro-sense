@@ -238,11 +238,11 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 16,
-        fontFamily: FontFamily.reemkufiRegular,
+        fontFamily: FontFamily.poppinsRegular,
     },
     selectedTextStyle: {
         fontSize: 14,
-        fontFamily: FontFamily.reemkufiMedium,
+        fontFamily: FontFamily.poppinsMedium,
         color: Colors.primaryColor,
     },
     selectedStyle: {
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     inputSearchStyle: {
         height: 40,
         fontSize: 14,
-        fontFamily: FontFamily.reemkufiRegular,
+        fontFamily: FontFamily.poppinsRegular,
     },
     icon: {
         marginRight: 5,
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     itemTextStyle: {
-        fontFamily: FontFamily.reemkufiRegular,
+        fontFamily: FontFamily.poppinsRegular,
         fontSize: FontSize.sm,
         color: Colors.primaryColor,
     },

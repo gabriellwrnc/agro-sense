@@ -3,13 +3,24 @@ import { Badge, View } from 'react-native-ui-lib';
 import { CustomText } from '../../../../../components';
 import { Pressable } from 'react-native';
 import { Colors } from '../../../../../configs';
-import { Case } from '../../../../../types';
+import {
+    AdminHomeDrawerParamList,
+    AdminHomeProps,
+    AdminStackParamList,
+    Case,
+} from '../../../../../types';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 type Props = {
     cases: Case[];
+    navigation: DrawerNavigationProp<
+        AdminStackParamList & AdminHomeDrawerParamList,
+        'AdminHomeScreen',
+        undefined
+    >;
 };
 
-const CaseTable: React.FC<Props> = ({ cases }) => {
+const CaseTable: React.FC<Props> = ({ cases, navigation }) => {
     return (
         <View
             style={{
@@ -122,7 +133,12 @@ const CaseTable: React.FC<Props> = ({ cases }) => {
                         </View>
                         <View center style={{ flex: 1.5 }}>
                             <Pressable
-                                onPress={() => console.log('detail')}
+                                onPress={() =>
+                                    navigation.navigate(
+                                        'AdminCaseDetailScreen',
+                                        { caseCode: item.caseCode },
+                                    )
+                                }
                                 style={{
                                     borderColor: Colors.primaryColor,
                                     borderWidth: 1.5,

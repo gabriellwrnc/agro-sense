@@ -285,3 +285,59 @@ export const getAllSolutions = async (req, res) => {
         return res.status(500).json({ status: 'fail', message: error });
     }
 };
+
+export const getCaseById = async (req, res) => {
+    const { caseCode } = req.query;
+
+    console.log('caseCode', caseCode);
+
+    try {
+        const caseFound = await Case.findOne({ caseCode });
+        if (!caseFound) {
+            return res
+                .status(404)
+                .json({ status: 'fail', message: 'Case not found' });
+        }
+        const pestFound = await Pest.findOne({ pestCode: caseFound.pestCode });
+
+        return res.status(200).json({
+            status: 'success',
+            data: {
+                case: caseFound,
+                pestName: pestFound.name,
+            },
+        });
+    } catch (error) {
+        return res.status(500).json({ status: 'fail', message: error });
+    }
+};
+
+export const verifiedCase = async (req, res) => {
+    const { caseCode, pestCode, symptom } = req.body;
+    try {
+        const caseFound = await Case.findOne({ caseCode });
+        if (!caseFound) {
+            return res
+                .status(404)
+                .json({ status: 'fail', message: 'Case not found' });
+        }
+        if (caseFound.status === 'verified') {
+            return res
+                .status(400)
+                .json({ status: 'fail', message: 'Case already verified' });
+        }
+
+        await caseFound.updateOne({
+            status: 'verified',
+            pestCode,
+            symptom,
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'Case verified successfully',
+        });
+    } catch (error) {
+        return res.status(500).json({ status: 'fail', message: error });
+    }
+};

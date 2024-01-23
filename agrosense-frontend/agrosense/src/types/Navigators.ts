@@ -35,6 +35,33 @@ export type AdminStackParamList = {
         }[];
         solutionCodes: string[];
     };
+    AdminAddPestImageScreen: {
+        name: string;
+        description: string;
+        symptom: {
+            symptomCode: string;
+            weightValue: number;
+        }[];
+        solutionCodes: string[];
+    };
+    AdminCaseDetailScreen: {
+        caseCode: string;
+    };
+    AdminVerifyCaseScreen: {
+        caseCode: string;
+        pestCode: string;
+    };
+    AdminVerifyCaseSymptomWeightScreen: {
+        symptom: {
+            symptomCode: string;
+            weightValue: number;
+        }[];
+        pest: {
+            value: string;
+            label: string;
+        };
+        caseCode: string;
+    };
 };
 
 export type AdminHomeDrawerParamList = {

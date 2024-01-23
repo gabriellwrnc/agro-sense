@@ -152,3 +152,20 @@ export type GetAllSolutionsResponse = {
     status: string;
     data: Solution[];
 };
+
+export type GetCaseResponse = {
+    status: string;
+    data: {
+        case: Case;
+        pestName: string;
+    };
+};
+
+export type VerifyCaseRequest = {
+    caseCode: string;
+    pestCode: string;
+    symptom: {
+        symptomCode: string;
+        weightValue: number;
+    }[];
+};

@@ -45,3 +45,23 @@ export type AdminAddPestSymptomWeightProps = NativeStackScreenProps<
     AdminStackParamList,
     'AdminAddPestSymptomWeightScreen'
 >;
+
+export type AdminAddPestImageProps = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminAddPestImageScreen'
+>;
+
+export type AdminCaseDetailProps = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminCaseDetailScreen'
+>;
+
+export type AdminVerifyCaseProps = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminVerifyCaseScreen'
+>;
+
+export type AdminVerifyCaseSymptomWeightProps = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminVerifyCaseSymptomWeightScreen'
+>;

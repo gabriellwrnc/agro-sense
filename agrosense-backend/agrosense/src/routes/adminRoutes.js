@@ -9,6 +9,8 @@ import {
     getAllCases,
     getAllSolutions,
     getAllUsers,
+    getCaseById,
+    verifiedCase,
 } from '../controllers';
 
 const adminRouter = Router();
@@ -22,5 +24,7 @@ adminRouter.post('/addVerifiedCase', addVerifiedCase);
 adminRouter.get('/getAllUsers', getAllUsers);
 adminRouter.get('/getAllCases', getAllCases);
 adminRouter.get('/getAllSolutions', getAllSolutions);
+adminRouter.get('/getCaseById', getCaseById);
+adminRouter.post('/verifiedCase', verifiedCase);
 
 export default adminRouter;

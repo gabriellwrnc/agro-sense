@@ -5,3 +5,7 @@ export { default as AdminFarmerData } from './farmerData/FarmerData';
 export { default as AdminSymptomData } from './symptomData/SymptomData';
 export { default as AdminAddCase } from './addPest/AddPest';
 export { default as AdminAddPestSymptomWeight } from './addPestSymptomWeight/AddPestSymptomWeigth';
+export { default as AdminAddPestImage } from './addPestImage/AddPestImage';
+export { default as AdminCaseDetail } from './caseDetail/CaseDetail';
+export { default as AdminVerifyCase } from './verifyCase/VerifyCase';
+export { default as AdminVerifyCaseSymptomWeight } from './verifyCaseSymptomWeight/VerifyCaseSymptomWeight';

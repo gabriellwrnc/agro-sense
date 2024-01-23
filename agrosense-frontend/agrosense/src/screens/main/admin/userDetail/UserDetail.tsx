@@ -12,6 +12,13 @@ const UserDetail: React.FC<AdminUserDetailScreen> = ({ navigation, route }) => {
     const { email } = route.params;
     const mutationGetUserByEmail = useGetUserByEmail(email);
     const [user, setUser] = React.useState<GetFarmerByEmailResponse>();
+    const sortedUnverifiedConsultations =
+        user?.data.unverifiedConsultation.sort((a, b) => {
+            return (
+                new Date(b.updatedAt).getTime() -
+                new Date(a.updatedAt).getTime()
+            );
+        });
 
     React.useEffect(() => {
         mutationGetUserByEmail.mutate(undefined, {
@@ -80,7 +87,7 @@ const UserDetail: React.FC<AdminUserDetailScreen> = ({ navigation, route }) => {
                         color="primaryColor"
                         fontFamily="poppinsMedium"
                         fontSize="md"
-                        text={user?.data.consultationCount}
+                        text={user?.data.consultations.length}
                     />
                 </View>
                 <View row centerV>
@@ -98,8 +105,8 @@ const UserDetail: React.FC<AdminUserDetailScreen> = ({ navigation, route }) => {
                     />
                 </View>
                 <View style={{ gap: 10 }}>
-                    {user?.data.unverifiedConsultation.map(
-                        ({ createdAt, consultationResult }, index) => {
+                    {sortedUnverifiedConsultations?.map(
+                        ({ createdAt, consultationResult, _id }, index) => {
                             const formattedDate = new Date(
                                 createdAt,
                             ).toLocaleDateString('id-ID', {
@@ -151,9 +158,11 @@ const UserDetail: React.FC<AdminUserDetailScreen> = ({ navigation, route }) => {
                                     <View flex center>
                                         <CustomButton
                                             onPress={() => {
-                                                console.log(
-                                                    consultationResult.mainPest
-                                                        .name,
+                                                navigation.navigate(
+                                                    'AdminVerifyConstultationScreen',
+                                                    {
+                                                        consultationId: _id,
+                                                    },
                                                 );
                                             }}
                                             text="Verifikasi"

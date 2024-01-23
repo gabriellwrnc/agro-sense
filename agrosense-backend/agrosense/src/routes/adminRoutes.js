@@ -12,6 +12,7 @@ import {
     getCaseById,
     getUserByEmail,
     verifiedCase,
+    verifiedConsultation,
 } from '../controllers';
 
 const adminRouter = Router();
@@ -28,5 +29,6 @@ adminRouter.get('/getAllSolutions', getAllSolutions);
 adminRouter.get('/getCaseById', getCaseById);
 adminRouter.post('/verifiedCase', verifiedCase);
 adminRouter.get('/getUserByEmail', getUserByEmail);
+adminRouter.post('/verifiedConsultation', verifiedConsultation);
 
 export default adminRouter;

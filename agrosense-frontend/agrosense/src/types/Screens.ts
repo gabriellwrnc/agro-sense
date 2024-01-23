@@ -70,3 +70,8 @@ export type AdminUserDetailScreen = NativeStackScreenProps<
     AdminStackParamList,
     'AdminUserDetailScreen'
 >;
+
+export type AdminVerifyConstultationProps = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminVerifyConstultationScreen'
+>;

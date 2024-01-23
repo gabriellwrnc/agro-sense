@@ -8,6 +8,7 @@ import {
     AdminUserDetail,
     AdminVerifyCase,
     AdminVerifyCaseSymptomWeight,
+    AdminVerifyConstultation,
 } from '../screens';
 import { AdminStackParamList } from '../types';
 import AdminHomeDrawer from './AdminHomeDrawer';
@@ -59,6 +60,11 @@ const AdminScreenStacks = () => {
             name: 'AdminUserDetailScreen',
             title: 'Detail Petani',
             component: AdminUserDetail,
+        },
+        {
+            name: 'AdminVerifyConstultationScreen',
+            title: 'Verifikasi Konsultasi',
+            component: AdminVerifyConstultation,
         },
     ];
 

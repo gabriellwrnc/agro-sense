@@ -70,19 +70,6 @@ const CaseData: React.FC<AdminHomeProps> = ({ navigation }) => {
                         fontSize: FontSize.md,
                     }}
                 />
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                    }}>
-                    <CustomButton
-                        text="+ Tambah Kasus"
-                        onPress={() => {
-                            console.log('Tambah Kasus');
-                        }}
-                        type="primary"
-                    />
-                </View>
                 <CaseTable cases={cases.cases} navigation={navigation} />
             </View>
         </ScreenLayout>

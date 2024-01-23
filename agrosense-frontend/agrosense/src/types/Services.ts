@@ -211,7 +211,18 @@ export type GetFarmerByEmailResponse = {
             role: string;
             __v: number;
         };
-        consultationCount: number;
+        consultations: UnverifiedConsultation[];
         unverifiedConsultation: UnverifiedConsultation[];
+    };
+};
+
+export type VerifyConsultationRequest = {
+    consultationId: string;
+    consultationResult: {
+        mainPest: {
+            name: string;
+            solution: string[];
+        };
+        status: string;
     };
 };

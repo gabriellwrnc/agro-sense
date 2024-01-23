@@ -1,7 +1,8 @@
 import { Formik, FormikProps } from 'formik';
 import React from 'react';
+import { StyleSheet } from 'react-native';
+import { MultiSelect } from 'react-native-element-dropdown';
 import { View } from 'react-native-ui-lib';
-import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import {
     CustomButton,
@@ -9,25 +10,39 @@ import {
     CustomTextInput,
     ScreenLayout,
 } from '../../../../components';
-import { useGetAllSymptoms } from '../../../../hooks';
-import { AddPestRequest, AdminAddPestProps, Symptom } from '../../../../types';
-import { handleAxiosErr } from '../../../../utils';
-import { MultiSelect } from 'react-native-element-dropdown';
-import { StyleSheet } from 'react-native';
 import { Colors, FontFamily, FontSize } from '../../../../configs';
+import { useGetAllSolution, useGetAllSymptoms } from '../../../../hooks';
+import {
+    AddPestRequest,
+    AdminAddPestProps,
+    Solution,
+    Symptom,
+} from '../../../../types';
+import { handleAxiosErr } from '../../../../utils';
 
 const AddPest: React.FC<AdminAddPestProps> = ({ navigation }) => {
-    const dispatch = useDispatch();
     const mutationGetAllSymptoms = useGetAllSymptoms();
+    const mutationGetAllSolutions = useGetAllSolution();
     const [symptoms, setSymptoms] = React.useState<Symptom[]>([]);
-    const [selected, setSelected] = React.useState<string[]>([]);
-
-    console.log('selected', selected);
+    const [solutions, setSolutions] = React.useState<Solution[]>([]);
+    const [selectedSymptoms, setSelectedSymptoms] = React.useState<string[]>(
+        [],
+    );
+    const [selectedSolution, setSelectedSolution] = React.useState<string[]>(
+        [],
+    );
 
     const structuredSymptoms = symptoms.map(symptom => {
         return {
             label: symptom.name,
             value: symptom.symptomCode,
+        };
+    });
+
+    const structuredSolutions = solutions.map(solution => {
+        return {
+            label: solution.name,
+            value: solution.solutionCode,
         };
     });
 
@@ -37,6 +52,7 @@ const AddPest: React.FC<AdminAddPestProps> = ({ navigation }) => {
         solutionCodes: [],
         symptom: [],
     };
+
     const addPestValidationScheme: yup.ObjectSchema<AddPestRequest> = yup
         .object()
         .shape({
@@ -46,10 +62,32 @@ const AddPest: React.FC<AdminAddPestProps> = ({ navigation }) => {
             symptom: yup.array().required('Gejala tidak boleh kosong'),
         });
 
+    const handleSubmit = (value: AddPestRequest) => {
+        navigation.navigate('AdminAddPestSymptomWeightScreen', {
+            name: value.name,
+            description: value.description,
+            solutionCodes: selectedSolution,
+            symptom: selectedSymptoms.map(symptom => {
+                return {
+                    symptomCode: symptom,
+                    weightValue: 0,
+                };
+            }),
+        });
+    };
+
     React.useEffect(() => {
         mutationGetAllSymptoms.mutate(undefined, {
             onSuccess: resp => {
                 setSymptoms(resp.data.data);
+            },
+            onError: err => {
+                handleAxiosErr(err);
+            },
+        });
+        mutationGetAllSolutions.mutate(undefined, {
+            onSuccess: resp => {
+                setSolutions(resp.data.data);
             },
             onError: err => {
                 handleAxiosErr(err);
@@ -62,9 +100,7 @@ const AddPest: React.FC<AdminAddPestProps> = ({ navigation }) => {
             <Formik
                 initialValues={addPestInitialValues}
                 validationSchema={addPestValidationScheme}
-                onSubmit={(values: AddPestRequest, actions) => {
-                    console.log(values);
-                }}>
+                onSubmit={handleSubmit}>
                 {(props: FormikProps<AddPestRequest>) => (
                     <View style={{ gap: 10 }}>
                         <View style={{ gap: 6 }}>
@@ -100,12 +136,12 @@ const AddPest: React.FC<AdminAddPestProps> = ({ navigation }) => {
                             />
                         </View>
                         <View style={{ gap: 10 }}>
-                            {selected.length > 0 ? (
+                            {selectedSymptoms.length > 0 ? (
                                 <CustomText
                                     color="primaryColor"
                                     fontFamily="poppinsSemiBold"
                                     fontSize="xl"
-                                    text={`Gejala yang dipilih: ${selected.length}`}
+                                    text={`Gejala yang dipilih: ${selectedSymptoms.length}`}
                                 />
                             ) : (
                                 <CustomText
@@ -127,9 +163,54 @@ const AddPest: React.FC<AdminAddPestProps> = ({ navigation }) => {
                                 valueField="value"
                                 placeholder="Pilih gejala"
                                 searchPlaceholder="Cari gejala"
-                                value={selected}
+                                value={selectedSymptoms}
                                 onChange={item => {
-                                    setSelected(item);
+                                    setSelectedSymptoms(item);
+                                    props.setFieldValue(
+                                        'symptom',
+                                        selectedSymptoms,
+                                    );
+                                }}
+                                selectedStyle={styles.selectedStyle}
+                                itemContainerStyle={styles.itemContainerStyle}
+                                itemTextStyle={styles.itemTextStyle}
+                            />
+                        </View>
+                        <View style={{ gap: 10 }}>
+                            {selectedSolution.length > 0 ? (
+                                <CustomText
+                                    color="primaryColor"
+                                    fontFamily="poppinsSemiBold"
+                                    fontSize="xl"
+                                    text={`Solusi yang dipilih: ${selectedSolution.length}`}
+                                />
+                            ) : (
+                                <CustomText
+                                    color="primaryColor"
+                                    fontFamily="poppinsSemiBold"
+                                    fontSize="xl"
+                                    text="Solusi dari Hama"
+                                />
+                            )}
+                            <MultiSelect
+                                style={styles.dropdown}
+                                placeholderStyle={styles.placeholderStyle}
+                                selectedTextStyle={styles.selectedTextStyle}
+                                inputSearchStyle={styles.inputSearchStyle}
+                                iconStyle={styles.iconStyle}
+                                search
+                                data={structuredSolutions}
+                                labelField="label"
+                                valueField="value"
+                                placeholder="Pilih solusi"
+                                searchPlaceholder="Cari solusi"
+                                value={selectedSolution}
+                                onChange={item => {
+                                    setSelectedSolution(item);
+                                    props.setFieldValue(
+                                        'symptom',
+                                        selectedSolution,
+                                    );
                                 }}
                                 selectedStyle={styles.selectedStyle}
                                 itemContainerStyle={styles.itemContainerStyle}

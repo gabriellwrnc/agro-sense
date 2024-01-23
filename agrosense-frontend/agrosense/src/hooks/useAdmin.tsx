@@ -6,6 +6,7 @@ import {
     AddPestResponse,
     GetAllCaseResponse,
     GetAllFarmersResponse,
+    GetAllSolutionsResponse,
 } from '../types';
 
 export const useGetAllCase = () =>
@@ -24,3 +25,8 @@ export const useAddPest = () =>
             return adminService.addPest(data);
         },
     );
+
+export const useGetAllSolution = () =>
+    useMutation<AxiosResponse<GetAllSolutionsResponse>, AxiosError>(() => {
+        return adminService.getAllSolutions();
+    });

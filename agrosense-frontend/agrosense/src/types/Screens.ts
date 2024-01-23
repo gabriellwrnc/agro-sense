@@ -40,3 +40,8 @@ export type AdminAddPestProps = NativeStackScreenProps<
     AdminStackParamList,
     'AdminAddPestScreen'
 >;
+
+export type AdminAddPestSymptomWeightProps = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminAddPestSymptomWeightScreen'
+>;

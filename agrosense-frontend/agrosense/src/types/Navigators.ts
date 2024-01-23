@@ -26,6 +26,15 @@ export type FarmerHomeTabParamList = {
 export type AdminStackParamList = {
     AdminHomeDrawer: undefined;
     AdminAddPestScreen: undefined;
+    AdminAddPestSymptomWeightScreen: {
+        name: string;
+        description: string;
+        symptom: {
+            symptomCode: string;
+            weightValue: number;
+        }[];
+        solutionCodes: string[];
+    };
 };
 
 export type AdminHomeDrawerParamList = {

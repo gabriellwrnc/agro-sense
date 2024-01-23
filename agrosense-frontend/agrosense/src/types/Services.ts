@@ -141,3 +141,14 @@ export type AddPestResponse = {
         solutions: string[];
     };
 };
+
+export type Solution = {
+    name: string;
+    solutionCode: string;
+    pestCode: string[];
+};
+
+export type GetAllSolutionsResponse = {
+    status: string;
+    data: Solution[];
+};

@@ -4,6 +4,7 @@ import {
     AddPestResponse,
     GetAllCaseResponse,
     GetAllFarmersResponse,
+    GetAllSolutionsResponse,
 } from '../types';
 import httpRequest from './api';
 
@@ -23,4 +24,10 @@ export const addPest = async (
     request: AddPestRequest,
 ): Promise<AxiosResponse<AddPestResponse>> => {
     return await httpRequest.post('/admin/addPest', request);
+};
+
+export const getAllSolutions = async (): Promise<
+    AxiosResponse<GetAllSolutionsResponse>
+> => {
+    return await httpRequest.get('/admin/getAllSolutions');
 };

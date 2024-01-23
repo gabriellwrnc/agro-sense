@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AdminStackParamList } from '../types';
 import { Colors, FontFamily } from '../configs';
+import { AdminAddCase, AdminAddPestSymptomWeight } from '../screens';
+import { AdminStackParamList } from '../types';
 import AdminHomeDrawer from './AdminHomeDrawer';
-import { AdminAddCase } from '../screens';
 
 const AdminStack = createNativeStackNavigator<AdminStackParamList>();
 
@@ -21,6 +21,11 @@ const AdminScreenStacks = () => {
             name: 'AdminAddPestScreen',
             title: 'Tambah Hama',
             component: AdminAddCase,
+        },
+        {
+            name: 'AdminAddPestSymptomWeightScreen',
+            title: 'Tambah Bobot Gejala',
+            component: AdminAddPestSymptomWeight,
         },
     ];
 

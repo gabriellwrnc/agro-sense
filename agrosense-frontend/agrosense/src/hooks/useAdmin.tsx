@@ -9,6 +9,7 @@ import {
     GetAllFarmersResponse,
     GetAllSolutionsResponse,
     GetCaseResponse,
+    GetFarmerByEmailResponse,
     VerifyCaseRequest,
 } from '../types';
 
@@ -54,3 +55,11 @@ export const useVerifyCase = () =>
             return adminService.verifyCase(data);
         },
     );
+
+export const useGetUserByEmail = (email: string) => {
+    return useMutation<AxiosResponse<GetFarmerByEmailResponse>, AxiosError>(
+        () => {
+            return adminService.getUserByEmail(email);
+        },
+    );
+};

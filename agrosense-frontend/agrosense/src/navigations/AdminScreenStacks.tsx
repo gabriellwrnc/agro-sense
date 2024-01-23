@@ -5,6 +5,7 @@ import {
     AdminAddPestImage,
     AdminAddPestSymptomWeight,
     AdminCaseDetail,
+    AdminUserDetail,
     AdminVerifyCase,
     AdminVerifyCaseSymptomWeight,
 } from '../screens';
@@ -53,6 +54,11 @@ const AdminScreenStacks = () => {
             name: 'AdminVerifyCaseSymptomWeightScreen',
             title: 'Tambah Bobot Gejala',
             component: AdminVerifyCaseSymptomWeight,
+        },
+        {
+            name: 'AdminUserDetailScreen',
+            title: 'Detail Petani',
+            component: AdminUserDetail,
         },
     ];
 

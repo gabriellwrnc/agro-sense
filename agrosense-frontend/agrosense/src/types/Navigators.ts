@@ -62,6 +62,9 @@ export type AdminStackParamList = {
         };
         caseCode: string;
     };
+    AdminUserDetailScreen: {
+        email: string;
+    };
 };
 
 export type AdminHomeDrawerParamList = {

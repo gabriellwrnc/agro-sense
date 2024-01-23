@@ -4,11 +4,11 @@ import { View } from 'react-native-ui-lib';
 import { ScreenLayout } from '../../../../components';
 import { Colors, FontFamily, FontSize } from '../../../../configs';
 import { useGetAllFarmers } from '../../../../hooks';
-import { Farmer } from '../../../../types';
+import { AdminHomeProps, Farmer } from '../../../../types';
 import { handleAxiosErr } from '../../../../utils';
 import FarmerTable from './components/FarmerTable';
 
-const FarmerData: React.FC = () => {
+const FarmerData: React.FC<AdminHomeProps> = ({ navigation }) => {
     const mutationGetAllFarmer = useGetAllFarmers();
     const [search, setSearch] = React.useState<string>('');
     const [farmer, setFarmer] = React.useState<Farmer[]>([]);
@@ -56,7 +56,7 @@ const FarmerData: React.FC = () => {
                     }}
                 />
             </View>
-            <FarmerTable farmer={farmer} />
+            <FarmerTable farmer={farmer} navigation={navigation} />
         </ScreenLayout>
     );
 };

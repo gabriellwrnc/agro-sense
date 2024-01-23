@@ -7,6 +7,7 @@ import {
     GetAllFarmersResponse,
     GetAllSolutionsResponse,
     GetCaseResponse,
+    GetFarmerByEmailResponse,
     VerifyCaseRequest,
 } from '../types';
 import httpRequest from './api';
@@ -55,4 +56,10 @@ export const verifyCase = async (
     request: VerifyCaseRequest,
 ): Promise<AxiosResponse<DefaultResponse>> => {
     return await httpRequest.post('/admin/verifiedCase', request);
+};
+
+export const getUserByEmail = async (
+    email: string,
+): Promise<AxiosResponse<GetFarmerByEmailResponse>> => {
+    return await httpRequest.get(`/admin/getUserByEmail/?email=${email}`);
 };

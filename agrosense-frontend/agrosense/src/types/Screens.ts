@@ -65,3 +65,8 @@ export type AdminVerifyCaseSymptomWeightProps = NativeStackScreenProps<
     AdminStackParamList,
     'AdminVerifyCaseSymptomWeightScreen'
 >;
+
+export type AdminUserDetailScreen = NativeStackScreenProps<
+    AdminStackParamList,
+    'AdminUserDetailScreen'
+>;

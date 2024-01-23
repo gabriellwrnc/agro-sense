@@ -10,6 +10,7 @@ import {
     getAllSolutions,
     getAllUsers,
     getCaseById,
+    getUserByEmail,
     verifiedCase,
 } from '../controllers';
 
@@ -26,5 +27,6 @@ adminRouter.get('/getAllCases', getAllCases);
 adminRouter.get('/getAllSolutions', getAllSolutions);
 adminRouter.get('/getCaseById', getCaseById);
 adminRouter.post('/verifiedCase', verifiedCase);
+adminRouter.get('/getUserByEmail', getUserByEmail);
 
 export default adminRouter;

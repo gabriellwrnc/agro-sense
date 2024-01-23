@@ -169,3 +169,49 @@ export type VerifyCaseRequest = {
         weightValue: number;
     }[];
 };
+
+export type UnverifiedConsultation = {
+    consultationResult: ConsultationResult;
+    _id: string;
+    userId: string;
+    symptomCodes: string[];
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+};
+
+export type ConsultationResult = {
+    mainPest: MainPest;
+    status: string;
+    otherPests: OtherPest[];
+};
+
+export type MainPest = {
+    name: string;
+    solution: string[];
+    similarityPercentage: number;
+};
+
+export type OtherPest = {
+    name: string;
+    solution: string[];
+    similarityPercentage: number;
+    _id: string;
+};
+
+export type GetFarmerByEmailResponse = {
+    status: string;
+    data: {
+        user: {
+            _id: string;
+            name: string;
+            phoneNumber: string;
+            firebaseId: string;
+            email: string;
+            role: string;
+            __v: number;
+        };
+        consultationCount: number;
+        unverifiedConsultation: UnverifiedConsultation[];
+    };
+};

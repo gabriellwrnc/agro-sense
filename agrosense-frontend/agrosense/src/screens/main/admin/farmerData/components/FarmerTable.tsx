@@ -3,13 +3,23 @@ import { Pressable } from 'react-native';
 import { View } from 'react-native-ui-lib';
 import { CustomText } from '../../../../../components';
 import { Colors } from '../../../../../configs';
-import { Farmer } from '../../../../../types';
+import {
+    AdminHomeDrawerParamList,
+    AdminStackParamList,
+    Farmer,
+} from '../../../../../types';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 type Props = {
     farmer: Farmer[];
+    navigation: DrawerNavigationProp<
+        AdminStackParamList & AdminHomeDrawerParamList,
+        'AdminHomeScreen',
+        undefined
+    >;
 };
 
-const FarmerTable: React.FC<Props> = ({ farmer }) => {
+const FarmerTable: React.FC<Props> = ({ farmer, navigation }) => {
     return (
         <View
             style={{
@@ -75,8 +85,9 @@ const FarmerTable: React.FC<Props> = ({ farmer }) => {
             {farmer.map((item, index) => {
                 const userNumbering = index + 1;
                 const actionPressed = () => {
-                    console.log(item._id, 'pressed');
-                    console.log(item.name, 'pressed');
+                    navigation.navigate('AdminUserDetailScreen', {
+                        email: item.email,
+                    });
                 };
 
                 return (

@@ -341,3 +341,35 @@ export const verifiedCase = async (req, res) => {
         return res.status(500).json({ status: 'fail', message: error });
     }
 };
+
+export const getUserByEmail = async (req, res) => {
+    const { email } = req.query;
+
+    try {
+        const userFound = await User.findOne({ email });
+        if (!userFound) {
+            return res
+                .status(404)
+                .json({ status: 'fail', message: 'User not found' });
+        }
+        const userConsultations = await Consultation.find({
+            userId: userFound._id,
+        });
+        const newCaseConsultations = userConsultations.filter(
+            consultation =>
+                consultation.consultationResult.status === 'newCase',
+        );
+
+        return res.status(200).json({
+            status: 'success',
+            data: {
+                user: userFound,
+                consultationCount: userConsultations.length,
+                unverifiedConsultation: newCaseConsultations,
+            },
+        });
+    } catch (error) {
+        console.log('error', error);
+        return res.status(500).json({ status: 'fail', message: error });
+    }
+};

@@ -55,19 +55,6 @@ const SymptomData: React.FC = () => {
                         fontSize: FontSize.md,
                     }}
                 />
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                    }}>
-                    <CustomButton
-                        text="+ Tambah Gejala"
-                        onPress={() => {
-                            console.log('Tambah Gejala');
-                        }}
-                        type="primary"
-                    />
-                </View>
                 <SymptomTable symptom={symptom} />
             </View>
         </ScreenLayout>

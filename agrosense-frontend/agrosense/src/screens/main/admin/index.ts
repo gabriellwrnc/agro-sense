@@ -10,3 +10,4 @@ export { default as AdminCaseDetail } from './caseDetail/CaseDetail';
 export { default as AdminVerifyCase } from './verifyCase/VerifyCase';
 export { default as AdminVerifyCaseSymptomWeight } from './verifyCaseSymptomWeight/VerifyCaseSymptomWeight';
 export { default as AdminUserDetail } from './userDetail/UserDetail';
+export { default as AdminVerifyConstultation } from './verifyConsultation/VerifyConsultation';

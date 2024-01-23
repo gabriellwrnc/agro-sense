@@ -65,6 +65,9 @@ export type AdminStackParamList = {
     AdminUserDetailScreen: {
         email: string;
     };
+    AdminVerifyConstultationScreen: {
+        consultationId: string;
+    };
 };
 
 export type AdminHomeDrawerParamList = {

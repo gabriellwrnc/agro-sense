@@ -364,12 +364,38 @@ export const getUserByEmail = async (req, res) => {
             status: 'success',
             data: {
                 user: userFound,
-                consultationCount: userConsultations.length,
+                consultations: userConsultations,
                 unverifiedConsultation: newCaseConsultations,
             },
         });
     } catch (error) {
         console.log('error', error);
+        return res.status(500).json({ status: 'fail', message: error });
+    }
+};
+
+export const verifiedConsultation = async (req, res) => {
+    const { consultationId, consultationResult } = req.body.request;
+
+    try {
+        const consultationFound = await Consultation.findOne({
+            _id: consultationId,
+        });
+        if (!consultationFound) {
+            return res
+                .status(404)
+                .json({ status: 'fail', message: 'Consultation not found' });
+        }
+
+        await consultationFound.updateOne({
+            consultationResult,
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'Consultation verified successfully',
+        });
+    } catch (error) {
         return res.status(500).json({ status: 'fail', message: error });
     }
 };
